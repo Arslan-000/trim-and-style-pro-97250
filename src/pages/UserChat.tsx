@@ -1,276 +1,199 @@
-import { Send, Image, Smile, Paperclip, Phone, Video, MoreVertical, ArrowLeft } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Send, Smile, Paperclip, Phone, Video, MoreVertical, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-const barbers = [
-  {
-    id: 1,
-    name: "Emma Davis",
-    avatar: "1438761681033-6461ffad8d80",
-    specialty: "Styling Specialist",
-    online: true,
-    lastMessage: "Sure! Looking forward to seeing you tomorrow.",
-    time: "2m ago",
-    unread: 0
-  },
-  {
-    id: 2,
-    name: "Sarah Williams",
-    avatar: "1494790108377-be9c29b29330",
-    specialty: "Hair Color Expert",
-    online: true,
-    lastMessage: "That color would look amazing on you!",
-    time: "1h ago",
-    unread: 2
-  },
-  {
-    id: 3,
-    name: "Michael Chen",
-    avatar: "1507003211169-0a1dd7228f2d",
-    specialty: "Men's Grooming",
-    online: false,
-    lastMessage: "I can do that style for you.",
-    time: "1d ago",
-    unread: 0
-  }
-];
 
 const messages = [
   {
     id: 1,
     sender: "barber",
-    text: "Hi John! How can I help you today?",
-    time: "10:30 AM",
-    avatar: "1438761681033-6461ffad8d80"
+    text: "Hello Arslan 👋",
+    time: "10:30 AM"
   },
   {
     id: 2,
     sender: "user",
-    text: "Hi Emma! I'd like to book an appointment for Friday.",
+    text: "Hi! I want to book a haircut.",
     time: "10:32 AM"
   },
   {
     id: 3,
     sender: "barber",
-    text: "Great! What time works best for you?",
-    time: "10:33 AM",
-    avatar: "1438761681033-6461ffad8d80"
+    text: "Sure, tomorrow 5:30 PM available.",
+    time: "10:35 AM"
   },
   {
     id: 4,
     sender: "user",
-    text: "Would 6:30 PM be available?",
-    time: "10:34 AM"
+    text: "Perfect! Thanks 😊",
+    time: "10:36 AM",
+    read: true
   },
   {
     id: 5,
     sender: "barber",
-    text: "Perfect! I've got you booked for Friday at 6:30 PM. Would you like your usual haircut and styling?",
-    time: "10:35 AM",
-    avatar: "1438761681033-6461ffad8d80"
+    text: "Great! See you tomorrow. Do you want your usual style?",
+    time: "10:38 AM"
   },
   {
     id: 6,
     sender: "user",
-    text: "Yes, that sounds perfect! Thanks!",
-    time: "10:36 AM"
+    text: "Yes please, the same as last time.",
+    time: "10:39 AM",
+    read: true
   },
   {
     id: 7,
     sender: "barber",
-    text: "Sure! Looking forward to seeing you tomorrow.",
-    time: "10:37 AM",
-    avatar: "1438761681033-6461ffad8d80"
+    text: "Perfect! Looking forward to it 👌",
+    time: "10:40 AM"
   }
 ];
 
 const UserChat = () => {
-  const [selectedBarber, setSelectedBarber] = useState(barbers[0]);
-  const [showConversation, setShowConversation] = useState(false);
-  const [messageText, setMessageText] = useState("");
   const navigate = useNavigate();
 
-  const handleBarberSelect = (barber: typeof barbers[0]) => {
-    setSelectedBarber(barber);
-    setShowConversation(true);
-  };
-
-  const handleBack = () => {
-    setShowConversation(false);
-  };
-
   return (
-    <div className="min-h-screen bg-background pb-20 md:pb-0">
-      <div className="max-w-7xl mx-auto h-[calc(100vh-12rem)] md:h-[calc(100vh-8rem)]">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 h-full bg-card">
-          {/* Chat List - Hidden on mobile when conversation is open */}
-          <div className={`${showConversation ? 'hidden md:block' : 'block'} md:border-r border-border`}>
-            <div className="p-6 border-b border-border">
-              <h1 className="text-2xl font-bold text-foreground">Messages</h1>
-              <p className="text-sm text-muted-foreground mt-1">Chat with your barbers</p>
+    <div className="min-h-screen pb-20" style={{ backgroundColor: '#121212' }}>
+      <div className="max-w-4xl mx-auto h-[calc(100vh-5rem)] flex flex-col">
+        
+        {/* AppBar - Top Header */}
+        <div 
+          className="flex items-center justify-between px-4 py-4 rounded-b-3xl"
+          style={{ backgroundColor: '#121212', height: '70px' }}
+        >
+          <div className="flex items-center gap-3">
+            <Button
+              size="icon"
+              variant="ghost"
+              className="text-white hover:bg-white/10"
+              onClick={() => navigate('/user')}
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            
+            <div className="relative">
+              <Avatar className="h-10 w-10 border-2 border-[#FFD54F]">
+                <AvatarImage src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" />
+                <AvatarFallback className="bg-[#2C2C2E] text-white">AB</AvatarFallback>
+              </Avatar>
+              <div 
+                className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2"
+                style={{ backgroundColor: '#4CAF50', borderColor: '#121212' }}
+              />
             </div>
 
-            <ScrollArea className="h-[calc(100%-100px)]">
-              <div className="p-4 space-y-2">
-                {barbers.map((barber) => (
-                  <Card
-                    key={barber.id}
-                    className={`cursor-pointer hover:shadow-md transition-all duration-300 ${
-                      selectedBarber.id === barber.id ? 'border-primary/50 bg-primary/5' : 'bg-card/50'
-                    }`}
-                    onClick={() => handleBarberSelect(barber)}
-                  >
-                    <CardContent className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="relative">
-                          <Avatar className="h-12 w-12">
-                            <AvatarImage src={`https://images.unsplash.com/photo-${barber.avatar}?w=100`} />
-                            <AvatarFallback>{barber.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                          </Avatar>
-                          {barber.online && (
-                            <div className="absolute bottom-0 right-0 h-3 w-3 bg-green-500 rounded-full border-2 border-background" />
-                          )}
-                        </div>
-                        
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between gap-2">
-                            <p className="font-semibold text-foreground truncate">{barber.name}</p>
-                            <span className="text-xs text-muted-foreground whitespace-nowrap">{barber.time}</span>
-                          </div>
-                          <p className="text-xs text-muted-foreground truncate">{barber.specialty}</p>
-                          <p className="text-sm text-muted-foreground mt-1 truncate">{barber.lastMessage}</p>
-                        </div>
-
-                        {barber.unread > 0 && (
-                          <Badge className="bg-primary text-primary-foreground">{barber.unread}</Badge>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </ScrollArea>
+            <div>
+              <p className="font-semibold text-white text-sm">Ali – Elite Barber</p>
+              <p className="text-xs" style={{ color: '#A0A0A0' }}>Online</p>
+            </div>
           </div>
 
-          {/* Chat Conversation */}
-          <div className={`${showConversation ? 'block' : 'hidden md:block'} md:col-span-2 flex flex-col h-full bg-background`}>
-            {/* Chat Header */}
-            <div className="p-4 border-b border-border bg-card/50 backdrop-blur-sm">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className="md:hidden"
-                    onClick={handleBack}
-                  >
-                    <ArrowLeft className="h-5 w-5" />
-                  </Button>
-                  
-                  <div className="relative">
-                    <Avatar className="h-10 w-10">
-                      <AvatarImage src={`https://images.unsplash.com/photo-${selectedBarber.avatar}?w=100`} />
-                      <AvatarFallback>{selectedBarber.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                    </Avatar>
-                    {selectedBarber.online && (
-                      <div className="absolute bottom-0 right-0 h-3 w-3 bg-green-500 rounded-full border-2 border-background" />
-                    )}
-                  </div>
+          <div className="flex items-center gap-2">
+            <Button size="icon" variant="ghost" className="text-white hover:bg-white/10 rounded-full">
+              <Phone className="h-5 w-5" />
+            </Button>
+            <Button size="icon" variant="ghost" className="text-white hover:bg-white/10 rounded-full">
+              <Video className="h-5 w-5" />
+            </Button>
+            <Button size="icon" variant="ghost" className="text-white hover:bg-white/10 rounded-full">
+              <MoreVertical className="h-5 w-5" />
+            </Button>
+          </div>
+        </div>
 
-                  <div>
-                    <p className="font-semibold text-foreground">{selectedBarber.name}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {selectedBarber.online ? 'Online' : 'Offline'}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <Button size="icon" variant="ghost" className="rounded-full">
-                    <Phone className="h-5 w-5" />
-                  </Button>
-                  <Button size="icon" variant="ghost" className="rounded-full">
-                    <Video className="h-5 w-5" />
-                  </Button>
-                  <Button size="icon" variant="ghost" className="rounded-full">
-                    <MoreVertical className="h-5 w-5" />
-                  </Button>
-                </div>
-              </div>
+        {/* Chat Body - Messages */}
+        <ScrollArea className="flex-1 px-4 py-6">
+          <div className="space-y-6">
+            
+            {/* Date Divider */}
+            <div className="flex items-center gap-3 my-4">
+              <div className="flex-1 h-px" style={{ backgroundColor: '#A0A0A0' }} />
+              <span className="text-xs font-medium" style={{ color: '#A0A0A0' }}>Today</span>
+              <div className="flex-1 h-px" style={{ backgroundColor: '#A0A0A0' }} />
             </div>
 
-            {/* Messages Area */}
-            <ScrollArea className="flex-1 p-6">
-              <div className="space-y-4">
-                {messages.map((message) => (
+            {messages.map((message, index) => (
+              <div
+                key={message.id}
+                className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in duration-300`}
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className={`flex flex-col ${message.sender === 'user' ? 'items-end' : 'items-start'} max-w-[75%]`}>
                   <div
-                    key={message.id}
-                    className={`flex items-end gap-2 ${
-                      message.sender === 'user' ? 'flex-row-reverse' : 'flex-row'
+                    className={`px-4 py-3 ${
+                      message.sender === 'user'
+                        ? 'rounded-t-2xl rounded-bl-2xl'
+                        : 'rounded-t-2xl rounded-br-2xl'
                     }`}
+                    style={{
+                      backgroundColor: message.sender === 'user' ? '#FFD54F' : '#2C2C2E',
+                      color: message.sender === 'user' ? '#121212' : '#FFFFFF'
+                    }}
                   >
-                    {message.sender === 'barber' && (
-                      <Avatar className="h-8 w-8 flex-shrink-0">
-                        <AvatarImage src={`https://images.unsplash.com/photo-${message.avatar}?w=100`} />
-                        <AvatarFallback>EM</AvatarFallback>
-                      </Avatar>
-                    )}
-
-                    <div className={`flex flex-col ${message.sender === 'user' ? 'items-end' : 'items-start'} max-w-[70%]`}>
-                      <div
-                        className={`rounded-2xl px-4 py-2 ${
-                          message.sender === 'user'
-                            ? 'bg-gradient-to-br from-primary to-amber-400 text-white'
-                            : 'bg-muted'
-                        }`}
-                      >
-                        <p className="text-sm">{message.text}</p>
-                      </div>
-                      <span className="text-xs text-muted-foreground mt-1">{message.time}</span>
-                    </div>
+                    <p className="text-sm leading-relaxed font-['Inter']">{message.text}</p>
                   </div>
-                ))}
-              </div>
-            </ScrollArea>
-
-            {/* Message Input */}
-            <div className="p-4 border-t border-border bg-card/50 backdrop-blur-sm">
-              <div className="flex items-center gap-2">
-                <Button size="icon" variant="ghost" className="rounded-full flex-shrink-0">
-                  <Paperclip className="h-5 w-5" />
-                </Button>
-                <Button size="icon" variant="ghost" className="rounded-full flex-shrink-0">
-                  <Image className="h-5 w-5" />
-                </Button>
-                
-                <div className="relative flex-1">
-                  <Input
-                    placeholder="Type a message..."
-                    value={messageText}
-                    onChange={(e) => setMessageText(e.target.value)}
-                    className="pr-10 rounded-full bg-background"
-                  />
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full h-7 w-7"
-                  >
-                    <Smile className="h-4 w-4" />
-                  </Button>
+                  <div className="flex items-center gap-1 mt-1 px-1">
+                    <span className="text-xs" style={{ color: '#A0A0A0' }}>{message.time}</span>
+                    {message.sender === 'user' && message.read && (
+                      <span className="text-xs" style={{ color: '#FFD54F' }}>✓✓</span>
+                    )}
+                  </div>
                 </div>
+              </div>
+            ))}
 
-                <Button size="icon" className="rounded-full flex-shrink-0 bg-gradient-to-br from-primary to-amber-400">
-                  <Send className="h-5 w-5" />
-                </Button>
+            {/* Typing Indicator */}
+            <div className="flex justify-start">
+              <div className="px-4 py-3 rounded-t-2xl rounded-br-2xl" style={{ backgroundColor: '#2C2C2E' }}>
+                <div className="flex items-center gap-1">
+                  <div className="flex gap-1">
+                    <span className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: '#A0A0A0', animationDelay: '0ms' }} />
+                    <span className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: '#A0A0A0', animationDelay: '150ms' }} />
+                    <span className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: '#A0A0A0', animationDelay: '300ms' }} />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+        </ScrollArea>
+
+        {/* Bottom Input Bar */}
+        <div 
+          className="px-4 py-3 mx-4 mb-4 rounded-2xl flex items-center gap-3"
+          style={{ backgroundColor: '#1E1E1E', height: '65px' }}
+        >
+          <Button 
+            size="icon" 
+            variant="ghost" 
+            className="text-white hover:bg-white/10 rounded-full flex-shrink-0"
+          >
+            <Paperclip className="h-5 w-5" />
+          </Button>
+          
+          <Button 
+            size="icon" 
+            variant="ghost" 
+            className="text-white hover:bg-white/10 rounded-full flex-shrink-0"
+          >
+            <Smile className="h-5 w-5" />
+          </Button>
+          
+          <Input
+            placeholder="Type a message…"
+            className="flex-1 border-0 rounded-full text-white placeholder:text-[#A0A0A0] focus-visible:ring-0 focus-visible:ring-offset-0"
+            style={{ backgroundColor: '#2C2C2E' }}
+          />
+
+          <Button 
+            size="icon" 
+            className="rounded-full flex-shrink-0 h-12 w-12"
+            style={{ backgroundColor: '#FFD54F' }}
+          >
+            <Send className="h-5 w-5 text-white" />
+          </Button>
         </div>
       </div>
     </div>
