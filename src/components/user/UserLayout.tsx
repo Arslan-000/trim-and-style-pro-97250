@@ -2,7 +2,7 @@ import { NavLink } from "@/components/NavLink";
 import { Home, Scissors, ShoppingBag, Calendar, User, Bell, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const navigation = [
   { name: "Home", href: "/user", icon: Home },
@@ -13,6 +13,8 @@ const navigation = [
 
 export const UserLayout = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const hideBottomBar = location.pathname === "/user/notifications";
 
   return (
     <div className="min-h-screen bg-background">
@@ -48,7 +50,8 @@ export const UserLayout = ({ children }: { children: React.ReactNode }) => {
       </nav>
 
       {/* Bottom Navigation for Mobile */}
-      <div className="fixed bottom-0 left-0 right-0 bg-card border-t border-border z-50 backdrop-blur-lg bg-card/95">
+      {!hideBottomBar && (
+        <div className="fixed bottom-0 left-0 right-0 bg-card border-t border-border z-50 backdrop-blur-lg bg-card/95">
         <div className="flex items-center justify-around py-2">
           {navigation.map((item) => {
             const ItemIcon = item.icon;
@@ -66,10 +69,11 @@ export const UserLayout = ({ children }: { children: React.ReactNode }) => {
             );
           })}
         </div>
-      </div>
+        </div>
+      )}
 
       {/* Main Content */}
-      <main className="pb-20">
+      <main className={hideBottomBar ? "" : "pb-20"}>
         {children}
       </main>
     </div>

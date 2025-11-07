@@ -1,4 +1,5 @@
-import { Bell, Gift, Calendar, Star, CheckCheck, Trash2, Settings } from "lucide-react";
+import { Bell, Gift, Calendar, Star, CheckCheck, Trash2, Settings, ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -76,21 +77,32 @@ const notifications = [
 
 const UserNotifications = () => {
   const unreadCount = notifications.filter(n => !n.read).length;
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-4xl mx-auto px-6 pt-6 pb-6 space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={() => navigate(-1)}
+            className="flex-shrink-0"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+          <div className="flex items-center justify-between flex-1">
           <div>
             <h1 className="text-3xl font-bold text-foreground">Notifications</h1>
             <p className="text-sm text-muted-foreground mt-1">
               You have {unreadCount} unread notification{unreadCount !== 1 ? 's' : ''}
             </p>
           </div>
-          <Button size="icon" variant="outline" className="rounded-full">
-            <Settings className="h-5 w-5" />
-          </Button>
+            <Button size="icon" variant="outline" className="rounded-full">
+              <Settings className="h-5 w-5" />
+            </Button>
+          </div>
         </div>
 
         {/* Actions */}

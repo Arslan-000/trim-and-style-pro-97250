@@ -106,9 +106,9 @@ const UserChat = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto h-[calc(100vh-8rem)]">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 h-full">
+    <div className="min-h-screen bg-background pb-20 md:pb-0">
+      <div className="max-w-7xl mx-auto h-[calc(100vh-12rem)] md:h-[calc(100vh-8rem)]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 h-full bg-card">
           {/* Chat List - Hidden on mobile when conversation is open */}
           <div className={`${showConversation ? 'hidden md:block' : 'block'} md:border-r border-border`}>
             <div className="p-6 border-b border-border">
@@ -159,7 +159,7 @@ const UserChat = () => {
           </div>
 
           {/* Chat Conversation */}
-          <div className={`${showConversation ? 'block' : 'hidden md:block'} md:col-span-2 flex flex-col h-full`}>
+          <div className={`${showConversation ? 'block' : 'hidden md:block'} md:col-span-2 flex flex-col h-full bg-background`}>
             {/* Chat Header */}
             <div className="p-4 border-b border-border bg-card/50 backdrop-blur-sm">
               <div className="flex items-center justify-between">
@@ -254,18 +254,18 @@ const UserChat = () => {
                     placeholder="Type a message..."
                     value={messageText}
                     onChange={(e) => setMessageText(e.target.value)}
-                    className="pr-12 rounded-full"
+                    className="pr-10 rounded-full bg-background"
                   />
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full h-8 w-8"
+                    className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full h-7 w-7"
                   >
-                    <Smile className="h-5 w-5" />
+                    <Smile className="h-4 w-4" />
                   </Button>
                 </div>
 
-                <Button size="icon" className="rounded-full flex-shrink-0 shadow-md">
+                <Button size="icon" className="rounded-full flex-shrink-0 bg-gradient-to-br from-primary to-amber-400">
                   <Send className="h-5 w-5" />
                 </Button>
               </div>
