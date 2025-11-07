@@ -22,6 +22,8 @@ import SalonDetail from "./pages/SalonDetail";
 import UserProducts from "./pages/UserProducts";
 import UserBookings from "./pages/UserBookings";
 import UserProfile from "./pages/UserProfile";
+import UserNotifications from "./pages/UserNotifications";
+import UserChat from "./pages/UserChat";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
@@ -57,6 +59,8 @@ const App = () => (
           <Route path="/user/products" element={<UserLayout><UserProducts /></UserLayout>} />
           <Route path="/user/bookings" element={<UserLayout><UserBookings /></UserLayout>} />
           <Route path="/user/profile" element={<UserLayout><UserProfile /></UserLayout>} />
+          <Route path="/user/notifications" element={<UserLayout><UserNotifications /></UserLayout>} />
+          <Route path="/user/chat" element={<UserLayout><UserChat /></UserLayout>} />
           
           {/* Auth Routes */}
           <Route path="/login" element={<Login />} />

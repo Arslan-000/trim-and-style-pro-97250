@@ -1,16 +1,19 @@
 import { NavLink } from "@/components/NavLink";
-import { Home, Scissors, ShoppingBag, Calendar, User, Bell } from "lucide-react";
+import { Home, Scissors, ShoppingBag, Calendar, User, Bell, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useNavigate } from "react-router-dom";
 
 const navigation = [
   { name: "Home", href: "/user", icon: Home },
-  { name: "Products", href: "/user/products", icon: ShoppingBag },
+  { name: "Chat", href: "/user/chat", icon: MessageCircle },
   { name: "Bookings", href: "/user/bookings", icon: Calendar },
   { name: "Profile", href: "/user/profile", icon: User },
 ];
 
 export const UserLayout = ({ children }: { children: React.ReactNode }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-background">
       {/* Top Navigation */}
@@ -26,11 +29,16 @@ export const UserLayout = ({ children }: { children: React.ReactNode }) => {
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <Button size="icon" variant="ghost" className="relative">
+              <Button 
+                size="icon" 
+                variant="ghost" 
+                className="relative"
+                onClick={() => navigate("/user/notifications")}
+              >
                 <Bell className="h-5 w-5" />
                 <span className="absolute top-1 right-1 h-2 w-2 bg-destructive rounded-full" />
               </Button>
-              <Avatar className="h-9 w-9 cursor-pointer">
+              <Avatar className="h-9 w-9 cursor-pointer" onClick={() => navigate("/user/profile")}>
                 <AvatarImage src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100" />
                 <AvatarFallback>JD</AvatarFallback>
               </Avatar>

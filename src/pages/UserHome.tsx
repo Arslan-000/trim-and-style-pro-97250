@@ -1,4 +1,12 @@
-import { Bell, Search, Scissors, Droplet, Wind, Sparkles, Users, Calendar, Star, Clock, MapPin, Plus, Phone, ChevronRight, Gift, Zap, Video, Lightbulb, PartyPopper } from "lucide-react";
+import { Bell, Search, Scissors, Droplet, Wind, Sparkles, Users, Calendar, Star, Clock, MapPin, Plus, Phone, ChevronRight, Gift, Zap, Video, Lightbulb, PartyPopper, Play, ShoppingBag, MessageCircle, Award } from "lucide-react";
+import storyOffersImg from "@/assets/story-offers.jpg";
+import storyTransformationImg from "@/assets/story-transformation.jpg";
+import storySalonWorkImg from "@/assets/story-salon-work.jpg";
+import storyTipsImg from "@/assets/story-tips.jpg";
+import storyEventsImg from "@/assets/story-events.jpg";
+import storyTutorialsImg from "@/assets/story-tutorials.jpg";
+import storyProductsImg from "@/assets/story-products.jpg";
+import storyReviewsImg from "@/assets/story-reviews.jpg";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -21,11 +29,14 @@ const services = [
 ];
 
 const stories = [
-  { id: 1, name: "Offers", icon: Gift, color: "from-primary to-amber-400" },
-  { id: 2, name: "Transformations", icon: Sparkles, color: "from-purple-500 to-pink-500" },
-  { id: 3, name: "Salon Work", icon: Video, color: "from-blue-500 to-cyan-500" },
-  { id: 4, name: "Tips", icon: Lightbulb, color: "from-green-500 to-emerald-500" },
-  { id: 5, name: "Events", icon: PartyPopper, color: "from-orange-500 to-red-500" },
+  { id: 1, name: "Offers", image: storyOffersImg, color: "from-primary to-amber-400" },
+  { id: 2, name: "Transformations", image: storyTransformationImg, color: "from-purple-500 to-pink-500" },
+  { id: 3, name: "Salon Work", image: storySalonWorkImg, color: "from-blue-500 to-cyan-500" },
+  { id: 4, name: "Tips", image: storyTipsImg, color: "from-green-500 to-emerald-500" },
+  { id: 5, name: "Events", image: storyEventsImg, color: "from-orange-500 to-red-500" },
+  { id: 6, name: "Tutorials", image: storyTutorialsImg, color: "from-cyan-500 to-blue-500" },
+  { id: 7, name: "Products", image: storyProductsImg, color: "from-pink-500 to-rose-500" },
+  { id: 8, name: "Reviews", image: storyReviewsImg, color: "from-indigo-500 to-purple-500" },
 ];
 
 const stylists = [
@@ -120,23 +131,43 @@ const UserHome = () => {
           </div>
         </div>
 
-        {/* Stories / Highlights Section - Enhanced */}
-        <div className="space-y-5">
+        {/* Stories / Highlights Section - Video Style */}
+        <div className="space-y-4">
+          <h3 className="text-xl font-bold text-foreground px-1">Latest Updates</h3>
           <ScrollArea className="w-full whitespace-nowrap">
-            <div className="flex gap-5 pb-2">
-              {stories.map((story) => {
-                const StoryIcon = story.icon;
-                return (
-                  <div key={story.id} className="flex flex-col items-center gap-3 cursor-pointer group">
-                    <div className={`relative h-24 w-24 rounded-full bg-gradient-to-br ${story.color} p-[3px] shadow-[var(--shadow-elevated)] group-hover:shadow-[var(--shadow-gold)] transition-all duration-300`}>
-                      <div className="h-full w-full rounded-full bg-background flex items-center justify-center group-hover:bg-transparent transition-all duration-300">
-                        <StoryIcon className="h-10 w-10 text-foreground group-hover:text-white transition-all duration-300 group-hover:scale-110" />
+            <div className="flex gap-3 pb-2">
+              {stories.map((story) => (
+                <div key={story.id} className="flex-shrink-0 cursor-pointer group">
+                  <div className="relative w-28 h-40 rounded-2xl overflow-hidden shadow-md group-hover:shadow-xl transition-all duration-300">
+                    {/* Story Image */}
+                    <img 
+                      src={story.image} 
+                      alt={story.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    
+                    {/* Gradient Overlay */}
+                    <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent`} />
+                    
+                    {/* Play Icon */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="h-10 w-10 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <Play className="h-5 w-5 text-primary fill-primary ml-0.5" />
                       </div>
                     </div>
-                    <p className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors">{story.name}</p>
+                    
+                    {/* Gradient Border */}
+                    <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${story.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} style={{ padding: '2px' }}>
+                      <div className="w-full h-full rounded-2xl bg-transparent" />
+                    </div>
+                    
+                    {/* Story Name */}
+                    <div className="absolute bottom-0 left-0 right-0 p-3">
+                      <p className="text-xs font-bold text-white drop-shadow-lg">{story.name}</p>
+                    </div>
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
