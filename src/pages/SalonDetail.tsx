@@ -13,6 +13,9 @@ const specialists = [
   { id: 3, name: "Michael", role: "Men's Grooming", img: '1507003211169-0a1dd7228f2d' },
   { id: 4, name: "Lisa", role: "Bridal Makeup", img: '1487412720507-e7ab37603c6f' },
   { id: 5, name: "John", role: "Hair Stylist", img: '1500648767791-00a36c92f2cb' },
+  { id: 6, name: "Alex", role: "Beard Specialist", img: '1506794778202-cad84cf45f1d' },
+  { id: 7, name: "Sophia", role: "Nail Artist", img: '1524504388940-b1c1722653e1' },
+  { id: 8, name: "James", role: "Color Expert", img: '1500648767791-00dcc994a43e' },
 ];
 
 const serviceCategories = [
@@ -22,6 +25,21 @@ const serviceCategories = [
   { name: "Massage", count: 10, icon: "💆" },
   { name: "Makeup", count: 5, icon: "💄" },
   { name: "Facial", count: 8, icon: "🌸" },
+];
+
+const haircutTypes = [
+  { name: "Classic Haircut", price: "$15", duration: "30 min" },
+  { name: "Fade Haircut", price: "$18", duration: "40 min" },
+  { name: "Buzz Cut", price: "$12", duration: "20 min" },
+  { name: "Undercut", price: "$20", duration: "45 min" },
+  { name: "Pompadour", price: "$25", duration: "50 min" },
+  { name: "Crew Cut", price: "$14", duration: "25 min" },
+  { name: "French Crop", price: "$22", duration: "45 min" },
+  { name: "Quiff", price: "$24", duration: "50 min" },
+  { name: "Side Part", price: "$18", duration: "35 min" },
+  { name: "Textured Crop", price: "$20", duration: "40 min" },
+  { name: "Slick Back", price: "$19", duration: "35 min" },
+  { name: "Long Layered Cut", price: "$28", duration: "60 min" },
 ];
 
 const packages = [
@@ -90,6 +108,7 @@ const reviews = [
 const SalonDetail = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("about");
+  const [showHaircutTypes, setShowHaircutTypes] = useState(false);
 
   return (
     <div className="min-h-screen bg-background pb-24">
@@ -177,7 +196,7 @@ const SalonDetail = () => {
               {specialists.map((specialist) => (
                 <div key={specialist.id} className="flex flex-col items-center gap-2 cursor-pointer group">
                   <Avatar className="h-20 w-20 border-2 border-primary/30 group-hover:border-primary transition-colors">
-                    <AvatarImage src={`https://images.unsplash.com/photo-${specialist.img}?w=150`} />
+                    <AvatarImage src={`https://images.unsplash.com/photo-${specialist.img}?w=150`} className="object-cover" />
                     <AvatarFallback>{specialist.name[0]}</AvatarFallback>
                   </Avatar>
                   <div className="text-center">
@@ -198,9 +217,13 @@ const SalonDetail = () => {
               <Button
                 key={tab}
                 size="sm"
-                variant={activeTab === tab ? "default" : "outline"}
+                variant={activeTab === tab ? "default" : "ghost"}
                 onClick={() => setActiveTab(tab)}
-                className="capitalize rounded-full px-6"
+                className={`capitalize rounded-full px-6 ${
+                  activeTab === tab 
+                    ? "bg-primary text-background hover:bg-primary/90" 
+                    : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                }`}
               >
                 {tab.replace("_", " ")}
               </Button>
@@ -271,18 +294,48 @@ const SalonDetail = () => {
 
               <div className="space-y-2">
                 {serviceCategories.map((service, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center justify-between p-4 rounded-xl bg-secondary/30 hover:bg-secondary/50 transition-colors cursor-pointer group"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="text-2xl">{service.icon}</div>
-                      <div>
-                        <p className="font-semibold text-foreground">{service.name}</p>
-                        <p className="text-sm text-muted-foreground">{service.count} types</p>
+                  <div key={idx}>
+                    <div
+                      onClick={() => {
+                        if (service.name === "Haircut") {
+                          setShowHaircutTypes(!showHaircutTypes);
+                        }
+                      }}
+                      className="flex items-center justify-between p-4 rounded-xl bg-secondary/30 hover:bg-secondary/50 transition-colors cursor-pointer group"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="text-2xl">{service.icon}</div>
+                        <div>
+                          <p className="font-semibold text-foreground">{service.name}</p>
+                          <p className="text-sm text-muted-foreground">{service.count} types</p>
+                        </div>
                       </div>
+                      <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
                     </div>
-                    <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                    
+                    {/* Show haircut types when clicked */}
+                    {service.name === "Haircut" && showHaircutTypes && (
+                      <div className="mt-2 ml-4 space-y-2 animate-fade-in">
+                        {haircutTypes.map((haircut, hidx) => (
+                          <div
+                            key={hidx}
+                            className="flex items-center justify-between p-3 rounded-lg bg-background/50 hover:bg-background transition-colors cursor-pointer"
+                            onClick={() => navigate("/user/book-appointment")}
+                          >
+                            <div>
+                              <p className="text-sm font-medium text-foreground">{haircut.name}</p>
+                              <p className="text-xs text-muted-foreground">{haircut.duration}</p>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <span className="text-sm font-semibold text-primary">{haircut.price}</span>
+                              <Button size="sm" variant="outline" className="h-8 px-3 text-xs">
+                                Book
+                              </Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -437,6 +490,7 @@ const SalonDetail = () => {
         <div className="max-w-7xl mx-auto">
           <Button
             size="lg"
+            onClick={() => navigate("/user/book-appointment")}
             className="w-full h-14 bg-gradient-to-r from-primary to-amber-400 hover:from-primary/90 hover:to-amber-400/90 text-lg font-semibold shadow-[var(--shadow-gold)] rounded-2xl"
           >
             Book Now
