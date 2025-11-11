@@ -13,7 +13,7 @@ const UserBookings = () => {
     {
       id: 1,
       date: "Dec 22, 2024 - 10:00 AM",
-      salon: "Lighthouse Barbers",
+      salon: "Elite Barber",
       address: "5940 Hudson Plaza",
       services: ["Staff Haircut", "Trim Shaving", "Aloe Vera Cream Hair Mask"],
       status: "Confirmed",
@@ -23,8 +23,8 @@ const UserBookings = () => {
     {
       id: 2,
       date: "Nov 20, 2024 - 13:00 PM",
-      salon: "Quinostura Salon",
-      address: "7812 Pinnsylvania Avenue",
+      salon: "Elite Barber",
+      address: "5940 Hudson Plaza",
       services: ["Undercut Haircut", "Regular Shaving", "Serum Hair Mask"],
       status: "Confirmed",
       image: "1503951914381-dfad4bba012d",
@@ -36,8 +36,8 @@ const UserBookings = () => {
     {
       id: 3,
       date: "Nov 20, 2024 - 15:00 PM",
-      salon: "Modern Men Barber",
-      address: "456 Burterfield Place",
+      salon: "Elite Barber",
+      address: "5940 Hudson Plaza",
       services: ["Undercut Haircut", "Regular Shaving"],
       status: "Completed",
       image: "1622287162716-f54bebf5f5d0",
@@ -46,8 +46,8 @@ const UserBookings = () => {
     {
       id: 4,
       date: "Dec 08, 2024 - 15:00 PM",
-      salon: "Barborella Inova",
-      address: "6993 Meadow Valley Terrace",
+      salon: "Elite Barber",
+      address: "5940 Hudson Plaza",
       services: ["Staff Haircut", "Trim Shaving", "After tight, Serum Hair Mask"],
       status: "Completed",
       image: "1585747860715-adbbc2cb6e43",
@@ -56,8 +56,8 @@ const UserBookings = () => {
     {
       id: 5,
       date: "Oct 18, 2024 - 11:00 AM",
-      salon: "Wicked Barber",
-      address: "4002 Ardent Alley",
+      salon: "Elite Barber",
+      address: "5940 Hudson Plaza",
       services: ["Staff Haircut", "Trim Shaving", "Aloe Vera Mask"],
       status: "Completed",
       image: "1503951914381-dfad4bba012d",
@@ -69,8 +69,8 @@ const UserBookings = () => {
     {
       id: 6,
       date: "Dec 23, 2024 - 10:00 AM",
-      salon: "Barborella Inova",
-      address: "5940 Meadow Valley Terrace",
+      salon: "Elite Barber",
+      address: "5940 Hudson Plaza",
       services: ["Staff Haircut", "Trim Shaving", "After tight, Serum Hair Mask"],
       status: "Cancelled",
       image: "1560066984-138dadb4c035",
@@ -226,10 +226,11 @@ const UserBookings = () => {
                     {activeTab === "completed" && (
                       <>
                         <Button
+                          onClick={() => navigate("/user/book-appointment")}
                           variant="outline"
                           className="flex-1 h-9 border-primary/30 text-primary hover:bg-primary/10"
                         >
-                          Cancel Booking
+                          Re-schedule
                         </Button>
                         <Button
                           className="flex-1 h-9 bg-primary hover:bg-primary/90 text-background"
@@ -245,7 +246,7 @@ const UserBookings = () => {
                           variant="outline"
                           className="flex-1 h-9 border-primary/30 text-primary hover:bg-primary/10"
                         >
-                          Cancel Booking
+                          Re-schedule
                         </Button>
                         <Button
                           className="flex-1 h-9 bg-primary hover:bg-primary/90 text-background"
