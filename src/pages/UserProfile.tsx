@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { User, Mail, Phone, MapPin, Calendar, Settings, LogOut, ChevronRight, Shield, Eye, EyeOff } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -25,6 +27,7 @@ const menuItems = [
 ];
 
 const UserProfile = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [adminCredentials, setAdminCredentials] = useState({
     username: "",
@@ -32,8 +35,15 @@ const UserProfile = () => {
   });
 
   const handleAdminLogin = () => {
-    // UI only - no backend integration
-    console.log("Admin login attempt:", adminCredentials);
+    // Dummy credentials: username: admin, password: admin123
+    if (adminCredentials.username === "admin" && adminCredentials.password === "admin123") {
+      toast.success("Admin login successful!");
+      setTimeout(() => {
+        navigate("/barber/dashboard");
+      }, 500);
+    } else {
+      toast.error("Invalid credentials! Try username: admin, password: admin123");
+    }
   };
 
   return (

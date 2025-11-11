@@ -324,7 +324,11 @@ const SalonDetail = () => {
                           <span className="text-xl font-bold text-primary">{pkg.price}</span>
                           <span className="text-sm text-muted-foreground line-through">{pkg.originalPrice}</span>
                         </div>
-                        <Button size="sm" className="bg-primary hover:bg-primary/90">
+                        <Button 
+                          size="sm" 
+                          className="bg-primary hover:bg-primary/90"
+                          onClick={() => navigate("/user/book-appointment")}
+                        >
                           Book Now
                         </Button>
                       </div>

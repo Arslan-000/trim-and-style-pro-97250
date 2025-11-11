@@ -14,7 +14,10 @@ const navigation = [
 export const UserLayout = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const hideBottomBar = location.pathname === "/user/notifications";
+  const hideBottomBar = location.pathname === "/user/notifications" 
+    || location.pathname.startsWith("/user/salon/") 
+    || location.pathname === "/user/book-appointment"
+    || location.pathname === "/user/appointment-detail";
 
   return (
     <div className="min-h-screen bg-background">

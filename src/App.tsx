@@ -24,6 +24,8 @@ import UserBookings from "./pages/UserBookings";
 import UserProfile from "./pages/UserProfile";
 import UserNotifications from "./pages/UserNotifications";
 import UserChat from "./pages/UserChat";
+import AppointmentBooking from "./pages/AppointmentBooking";
+import AppointmentDetail from "./pages/AppointmentDetail";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
@@ -41,6 +43,7 @@ const App = () => (
           
           {/* Barber Admin Routes */}
           <Route path="/barber" element={<BarberLayout><BarberDashboard /></BarberLayout>} />
+          <Route path="/barber/dashboard" element={<BarberLayout><BarberDashboard /></BarberLayout>} />
           <Route path="/barber/appointments" element={<BarberLayout><BarberAppointments /></BarberLayout>} />
           <Route path="/barber/staff" element={<BarberLayout><BarberStaff /></BarberLayout>} />
           <Route path="/barber/services" element={<BarberLayout><BarberServices /></BarberLayout>} />
@@ -58,6 +61,8 @@ const App = () => (
           <Route path="/user/salon/:id" element={<UserLayout><SalonDetail /></UserLayout>} />
           <Route path="/user/products" element={<UserLayout><UserProducts /></UserLayout>} />
           <Route path="/user/bookings" element={<UserLayout><UserBookings /></UserLayout>} />
+          <Route path="/user/book-appointment" element={<UserLayout><AppointmentBooking /></UserLayout>} />
+          <Route path="/user/appointment-detail" element={<UserLayout><AppointmentDetail /></UserLayout>} />
           <Route path="/user/profile" element={<UserLayout><UserProfile /></UserLayout>} />
           <Route path="/user/notifications" element={<UserLayout><UserNotifications /></UserLayout>} />
           <Route path="/user/chat" element={<UserLayout><UserChat /></UserLayout>} />
