@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { ThemeProvider } from "@/hooks/use-theme";
 import { BarberLayout } from "@/components/barber/BarberLayout";
 import { UserLayout } from "@/components/user/UserLayout";
 import BarberDashboard from "./pages/BarberDashboard";
@@ -24,6 +25,8 @@ import UserBookings from "./pages/UserBookings";
 import UserProfile from "./pages/UserProfile";
 import UserNotifications from "./pages/UserNotifications";
 import UserChat from "./pages/UserChat";
+import UserSearch from "./pages/UserSearch";
+import UserRewards from "./pages/UserRewards";
 import AppointmentBooking from "./pages/AppointmentBooking";
 import AppointmentDetail from "./pages/AppointmentDetail";
 import Login from "./pages/Login";
@@ -34,10 +37,11 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
+    <ThemeProvider defaultTheme="light">
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigate to="/user" replace />} />
           
@@ -66,6 +70,8 @@ const App = () => (
           <Route path="/user/profile" element={<UserLayout><UserProfile /></UserLayout>} />
           <Route path="/user/notifications" element={<UserLayout><UserNotifications /></UserLayout>} />
           <Route path="/user/chat" element={<UserLayout><UserChat /></UserLayout>} />
+          <Route path="/user/search" element={<UserLayout><UserSearch /></UserLayout>} />
+          <Route path="/user/rewards" element={<UserLayout><UserRewards /></UserLayout>} />
           
           {/* Auth Routes */}
           <Route path="/login" element={<Login />} />
@@ -75,7 +81,8 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-    </TooltipProvider>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 

@@ -18,10 +18,13 @@ export const UserLayout = ({ children }: { children: React.ReactNode }) => {
     || location.pathname.startsWith("/user/salon/") 
     || location.pathname === "/user/book-appointment"
     || location.pathname === "/user/appointment-detail";
+  
+  const hideTopNav = location.pathname === "/user/chat";
 
   return (
     <div className="min-h-screen bg-background">
       {/* Top Navigation */}
+      {!hideTopNav && (
       <nav className="bg-card border-b border-border sticky top-0 z-50 backdrop-blur-lg bg-card/95">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-16">
@@ -51,6 +54,7 @@ export const UserLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
         </div>
       </nav>
+      )}
 
       {/* Bottom Navigation for Mobile */}
       {!hideBottomBar && (
@@ -76,7 +80,7 @@ export const UserLayout = ({ children }: { children: React.ReactNode }) => {
       )}
 
       {/* Main Content */}
-      <main className={hideBottomBar ? "" : "pb-20"}>
+      <main className={hideTopNav ? "" : (hideBottomBar ? "" : "pb-20")}>
         {children}
       </main>
     </div>

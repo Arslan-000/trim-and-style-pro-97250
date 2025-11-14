@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
@@ -146,13 +147,16 @@ const UserHome = () => {
                 {/* Search Input */}
                 <Input
                   placeholder="Search services, deals, or stylists..."
-                  className="flex-1 border-0 bg-transparent text-base h-14 px-0 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-muted-foreground/60"
+                  onClick={() => navigate("/user/search")}
+                  readOnly
+                  className="flex-1 border-0 bg-transparent text-base h-14 px-0 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-muted-foreground/60 cursor-pointer"
                 />
                 
                 {/* Filter Button */}
                 <Button 
                   size="icon" 
                   variant="ghost"
+                  onClick={() => navigate("/user/search")}
                   className="h-12 w-12 rounded-full hover:bg-primary/10 text-muted-foreground hover:text-primary transition-all flex-shrink-0"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
@@ -196,6 +200,42 @@ const UserHome = () => {
             </Button>
           </div>
         </div>
+
+        {/* Loyalty Points Card */}
+        <Card 
+          className="relative overflow-hidden bg-gradient-to-br from-amber-50 via-amber-100/50 to-amber-50 dark:from-amber-950/20 dark:via-amber-900/10 dark:to-amber-950/20 border-amber-200 dark:border-amber-800/30 cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-[1.01]"
+          onClick={() => navigate("/user/rewards")}
+        >
+          <div className="absolute top-0 right-0 w-40 h-40 bg-amber-400/20 rounded-full blur-3xl" />
+          <CardContent className="relative p-5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-primary to-amber-400 flex items-center justify-center shadow-lg flex-shrink-0">
+                  <Award className="h-7 w-7 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-foreground mb-1">Loyalty Points</h3>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-sm text-foreground">You have</span>
+                    <span className="text-2xl font-bold text-primary">120</span>
+                    <span className="text-sm text-muted-foreground">points</span>
+                  </div>
+                  <div className="flex items-center gap-2 mt-2">
+                    <Progress value={60} className="h-1.5 w-24 bg-amber-200/50 dark:bg-amber-900/30" />
+                    <span className="text-xs text-muted-foreground font-medium">80 more for a free haircut!</span>
+                  </div>
+                </div>
+              </div>
+              <Button 
+                size="sm" 
+                className="flex-shrink-0 bg-primary hover:bg-primary/90 text-primary-foreground shadow-md"
+              >
+                View Rewards
+                <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Stories / Highlights Section - Video Style */}
         <div className="space-y-4">

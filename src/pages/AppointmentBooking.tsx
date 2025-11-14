@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowLeft, Check, Calendar, Clock, User, CreditCard, Download, Home, Sparkles, MapPin, ChevronDown } from "lucide-react";
+import { ArrowLeft, Check, Calendar, Clock, User, CreditCard, Download, Home, Sparkles, MapPin, ChevronDown, Star, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -42,16 +42,25 @@ const AppointmentBooking = () => {
       name: "Nathan Alexander",
       role: "Master Barber",
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
+      rating: 4.9,
+      experience: "8 years",
+      specialty: "Hair Styling",
     },
     {
       name: "Marcus Johnson",
       role: "Senior Stylist",
       image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150",
+      rating: 5.0,
+      experience: "10 years",
+      specialty: "Color Expert",
     },
     {
       name: "David Chen",
       role: "Beard Specialist",
       image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150",
+      rating: 4.8,
+      experience: "6 years",
+      specialty: "Beard Care",
     },
   ];
 
@@ -93,14 +102,14 @@ const AppointmentBooking = () => {
         </div>
       )}
 
-      <div className="relative z-10 max-w-2xl mx-auto px-4 py-6">
+      <div className="relative z-20 max-w-2xl mx-auto px-4 py-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <Button
             variant="ghost"
             size="icon"
             onClick={handleBack}
-            className="text-foreground hover:bg-card/50 hover:text-primary transition-all"
+            className="relative z-30 text-foreground hover:bg-card hover:text-primary transition-all cursor-pointer"
           >
             <ArrowLeft className="h-6 w-6" />
           </Button>
@@ -188,25 +197,73 @@ const AppointmentBooking = () => {
                 <User className="h-5 w-5 text-primary" />
                 Select Specialist
               </h2>
-              <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+              <div className="grid grid-cols-1 gap-4">
                 {specialists.map((specialist) => (
                   <button
                     key={specialist.name}
                     onClick={() => setSelectedSpecialist(specialist.name)}
-                    className={`flex-shrink-0 flex flex-col items-center gap-3 p-5 rounded-2xl transition-all duration-300 ${
+                    className={`group relative overflow-hidden rounded-2xl transition-all duration-300 ${
                       selectedSpecialist === specialist.name
-                        ? "bg-card border-2 border-primary shadow-[0_8px_25px_rgba(255,213,79,0.25)] scale-105"
-                        : "bg-card border-2 border-transparent hover:border-primary/30 hover:scale-105"
+                        ? "ring-2 ring-primary shadow-[0_8px_30px_rgba(255,213,79,0.3)] scale-[1.02]"
+                        : "ring-1 ring-border hover:ring-primary/50 hover:shadow-lg hover:scale-[1.01]"
                     }`}
                   >
-                    <Avatar className="h-24 w-24 border-2 border-primary/20">
-                      <AvatarImage src={specialist.image} className="object-cover" />
-                      <AvatarFallback>{specialist.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                    </Avatar>
-                    <div className="text-center">
-                      <p className="font-bold text-foreground">{specialist.name}</p>
-                      <p className="text-xs text-muted-foreground">{specialist.role}</p>
-                    </div>
+                    <Card className="border-0 bg-gradient-to-br from-card via-card to-muted/20">
+                      <CardContent className="p-0">
+                        <div className="flex items-center gap-4 p-4">
+                          {/* Avatar Section */}
+                          <div className="relative flex-shrink-0">
+                            <Avatar className="h-20 w-20 ring-2 ring-background shadow-lg">
+                              <AvatarImage src={specialist.image} className="object-cover" />
+                              <AvatarFallback className="text-lg font-bold">{specialist.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                            </Avatar>
+                            {selectedSpecialist === specialist.name && (
+                              <div className="absolute -top-1 -right-1 h-7 w-7 bg-gradient-to-br from-primary to-amber-400 rounded-full flex items-center justify-center shadow-lg animate-scale-in">
+                                <Check className="h-4 w-4 text-white" />
+                              </div>
+                            )}
+                            <div className="absolute -bottom-1 -right-1 h-6 w-6 bg-green-500 rounded-full border-2 border-card shadow-md" />
+                          </div>
+
+                          {/* Info Section */}
+                          <div className="flex-1 text-left min-w-0">
+                            <div className="flex items-start justify-between gap-2 mb-1">
+                              <h3 className="font-bold text-lg text-foreground truncate">{specialist.name}</h3>
+                              <div className="flex items-center gap-1 bg-amber-50 dark:bg-amber-950/30 px-2 py-0.5 rounded-full flex-shrink-0">
+                                <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
+                                <span className="text-sm font-bold text-foreground">{specialist.rating}</span>
+                              </div>
+                            </div>
+                            <p className="text-sm text-primary font-medium mb-2">{specialist.role}</p>
+                            
+                            <div className="flex items-center gap-3 flex-wrap">
+                              <div className="flex items-center gap-1.5 bg-muted/50 px-2.5 py-1 rounded-lg">
+                                <Award className="h-3.5 w-3.5 text-primary" />
+                                <span className="text-xs font-medium text-foreground">{specialist.experience}</span>
+                              </div>
+                              <div className="flex items-center gap-1.5 bg-muted/50 px-2.5 py-1 rounded-lg">
+                                <Sparkles className="h-3.5 w-3.5 text-primary" />
+                                <span className="text-xs font-medium text-foreground">{specialist.specialty}</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Selection Indicator */}
+                          <div className={`flex-shrink-0 transition-all duration-300 ${
+                            selectedSpecialist === specialist.name 
+                              ? "opacity-100 scale-100" 
+                              : "opacity-0 scale-0 group-hover:opacity-50 group-hover:scale-100"
+                          }`}>
+                            <ChevronDown className="h-6 w-6 text-primary rotate-[-90deg]" />
+                          </div>
+                        </div>
+
+                        {/* Bottom gradient accent */}
+                        <div className={`h-1 bg-gradient-to-r from-primary via-amber-400 to-primary transition-all duration-300 ${
+                          selectedSpecialist === specialist.name ? "opacity-100" : "opacity-0"
+                        }`} />
+                      </CardContent>
+                    </Card>
                   </button>
                 ))}
               </div>

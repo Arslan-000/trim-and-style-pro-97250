@@ -2,9 +2,9 @@ import { Send, Smile, Paperclip, Phone, Video, MoreVertical } from "lucide-react
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { useState } from "react";
 
-const messages = [
+const initialMessages = [
   {
     id: 1,
     sender: "barber",
@@ -52,133 +52,156 @@ const messages = [
 ];
 
 const UserChat = () => {
+  const [messages, setMessages] = useState(initialMessages);
+  const [inputMessage, setInputMessage] = useState("");
+
+  const handleSendMessage = () => {
+    if (!inputMessage.trim()) return;
+
+    const newMessage = {
+      id: messages.length + 1,
+      sender: "user",
+      text: inputMessage,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      read: false
+    };
+
+    setMessages([...messages, newMessage]);
+    setInputMessage("");
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#121212' }}>
+    <div className="fixed inset-0 flex flex-col bg-background">
       {/* AppBar - Top Header - FIXED */}
       <div 
-        className="flex items-center justify-between px-4 py-4 border-b"
-        style={{ backgroundColor: '#121212', borderColor: '#2C2C2E' }}
+        className="flex items-center justify-between px-4 py-3 border-b border-border flex-shrink-0 bg-card shadow-sm"
       >
         <div className="flex items-center gap-3">
           <div className="relative">
-            <Avatar className="h-10 w-10 border-2 border-[#FFD54F]">
+            <Avatar className="h-11 w-11 border-2 border-primary shadow-sm">
               <AvatarImage src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" />
-              <AvatarFallback className="bg-[#2C2C2E] text-white">EB</AvatarFallback>
+              <AvatarFallback className="bg-muted text-foreground">EB</AvatarFallback>
             </Avatar>
             <div 
-              className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2"
-              style={{ backgroundColor: '#4CAF50', borderColor: '#121212' }}
+              className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border-2 border-card bg-green-500 shadow-sm"
             />
           </div>
 
           <div>
-            <p className="font-semibold text-white text-sm">Elite Barber</p>
-            <p className="text-xs" style={{ color: '#A0A0A0' }}>Online</p>
+            <p className="font-semibold text-foreground text-base">Elite Barber</p>
+            <p className="text-xs text-green-500 font-medium">Online</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Button size="icon" variant="ghost" className="text-white hover:bg-white/10 rounded-full">
+        <div className="flex items-center gap-1">
+          <Button size="icon" variant="ghost" className="text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-full h-9 w-9">
             <Phone className="h-5 w-5" />
           </Button>
-          <Button size="icon" variant="ghost" className="text-white hover:bg-white/10 rounded-full">
+          <Button size="icon" variant="ghost" className="text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-full h-9 w-9">
             <Video className="h-5 w-5" />
           </Button>
-          <Button size="icon" variant="ghost" className="text-white hover:bg-white/10 rounded-full">
+          <Button size="icon" variant="ghost" className="text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-full h-9 w-9">
             <MoreVertical className="h-5 w-5" />
           </Button>
         </div>
       </div>
 
       {/* Chat Body - Messages - SCROLLABLE */}
-      <ScrollArea className="flex-1 px-4 py-6">
-        <div className="space-y-6 max-w-4xl mx-auto">
+      <div className="flex-1 overflow-y-auto px-4 py-4 pb-24">
+        <div className="space-y-4 max-w-4xl mx-auto">
           
           {/* Date Divider */}
-          <div className="flex items-center gap-3 my-4">
-            <div className="flex-1 h-px" style={{ backgroundColor: '#A0A0A0' }} />
-            <span className="text-xs font-medium" style={{ color: '#A0A0A0' }}>Today</span>
-            <div className="flex-1 h-px" style={{ backgroundColor: '#A0A0A0' }} />
+          <div className="flex items-center gap-3 my-6">
+            <div className="flex-1 h-px bg-border" />
+            <span className="text-xs font-semibold text-muted-foreground bg-muted px-3 py-1 rounded-full">Today</span>
+            <div className="flex-1 h-px bg-border" />
           </div>
 
           {messages.map((message, index) => (
             <div
               key={message.id}
-              className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in duration-300`}
-              style={{ animationDelay: `${index * 100}ms` }}
+              className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in-50 slide-in-from-bottom-2 duration-300`}
+              style={{ animationDelay: `${index * 50}ms` }}
             >
-              <div className={`flex flex-col ${message.sender === 'user' ? 'items-end' : 'items-start'} max-w-[75%]`}>
+              <div className={`flex flex-col ${message.sender === 'user' ? 'items-end' : 'items-start'} max-w-[80%]`}>
                 <div
-                  className={`px-4 py-3 ${
+                  className={`px-4 py-2.5 shadow-sm ${
                     message.sender === 'user'
-                      ? 'rounded-t-2xl rounded-bl-2xl'
-                      : 'rounded-t-2xl rounded-br-2xl'
+                      ? 'rounded-[18px] rounded-br-sm bg-primary text-primary-foreground'
+                      : 'rounded-[18px] rounded-bl-sm bg-card text-foreground border border-border'
                   }`}
-                  style={{
-                    backgroundColor: message.sender === 'user' ? '#FFD54F' : '#2C2C2E',
-                    color: message.sender === 'user' ? '#121212' : '#FFFFFF'
-                  }}
                 >
-                  <p className="text-sm leading-relaxed font-['Inter']">{message.text}</p>
+                  <p className="text-[15px] leading-relaxed">{message.text}</p>
                 </div>
-                <div className="flex items-center gap-1 mt-1 px-1">
-                  <span className="text-xs" style={{ color: '#A0A0A0' }}>{message.time}</span>
+                <div className="flex items-center gap-1 mt-1 px-2">
+                  <span className="text-[11px] text-muted-foreground">{message.time}</span>
                   {message.sender === 'user' && message.read && (
-                    <span className="text-xs" style={{ color: '#FFD54F' }}>✓✓</span>
+                    <span className="text-[11px] text-blue-500 font-semibold">✓✓</span>
                   )}
                 </div>
               </div>
             </div>
           ))}
 
-          {/* Typing Indicator */}
-          <div className="flex justify-start">
-            <div className="px-4 py-3 rounded-t-2xl rounded-br-2xl" style={{ backgroundColor: '#2C2C2E' }}>
-              <div className="flex items-center gap-1">
-                <div className="flex gap-1">
-                  <span className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: '#A0A0A0', animationDelay: '0ms' }} />
-                  <span className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: '#A0A0A0', animationDelay: '150ms' }} />
-                  <span className="w-2 h-2 rounded-full animate-bounce" style={{ backgroundColor: '#A0A0A0', animationDelay: '300ms' }} />
+          {/* Typing Indicator - Hidden by default, show when needed */}
+          {false && (
+            <div className="flex justify-start">
+              <div className="px-4 py-3 rounded-[18px] rounded-bl-sm bg-card border border-border shadow-sm">
+                <div className="flex items-center gap-1">
+                  <div className="flex gap-1">
+                    <span className="w-2 h-2 rounded-full bg-muted-foreground/60 animate-bounce" style={{ animationDelay: '0ms' }} />
+                    <span className="w-2 h-2 rounded-full bg-muted-foreground/60 animate-bounce" style={{ animationDelay: '150ms' }} />
+                    <span className="w-2 h-2 rounded-full bg-muted-foreground/60 animate-bounce" style={{ animationDelay: '300ms' }} />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
-      </ScrollArea>
+      </div>
 
       {/* Bottom Input Bar - FIXED */}
       <div 
-        className="px-4 py-3 mx-4 mb-4 rounded-2xl flex items-center gap-3"
-        style={{ backgroundColor: '#1E1E1E' }}
+        className="px-3 py-2 mx-3 mb-3 rounded-3xl flex items-center gap-2 flex-shrink-0 bg-card border border-border shadow-lg"
       >
         <Button 
           size="icon" 
           variant="ghost" 
-          className="text-white hover:bg-white/10 rounded-full flex-shrink-0"
+          className="text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-full flex-shrink-0 h-9 w-9"
         >
           <Paperclip className="h-5 w-5" />
         </Button>
         
-        <Button 
-          size="icon" 
-          variant="ghost" 
-          className="text-white hover:bg-white/10 rounded-full flex-shrink-0"
-        >
-          <Smile className="h-5 w-5" />
-        </Button>
-        
         <Input
           placeholder="Type a message…"
-          className="flex-1 border-0 rounded-full text-white placeholder:text-[#A0A0A0] focus-visible:ring-0 focus-visible:ring-offset-0"
-          style={{ backgroundColor: '#2C2C2E' }}
+          value={inputMessage}
+          onChange={(e) => setInputMessage(e.target.value)}
+          onKeyPress={handleKeyPress}
+          className="flex-1 border-0 bg-transparent text-foreground placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0 h-9"
         />
 
         <Button 
           size="icon" 
-          className="rounded-full flex-shrink-0 h-12 w-12"
-          style={{ backgroundColor: '#FFD54F' }}
+          variant="ghost" 
+          className="text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-full flex-shrink-0 h-9 w-9"
         >
-          <Send className="h-5 w-5 text-white" />
+          <Smile className="h-5 w-5" />
+        </Button>
+
+        <Button 
+          size="icon" 
+          onClick={handleSendMessage}
+          disabled={!inputMessage.trim()}
+          className="rounded-full flex-shrink-0 h-9 w-9 bg-primary hover:bg-primary/90 text-primary-foreground shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <Send className="h-4 w-4" />
         </Button>
       </div>
     </div>

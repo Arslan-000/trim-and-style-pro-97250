@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { User, Mail, Phone, MapPin, Calendar, Settings, LogOut, ChevronRight, Shield, Eye, EyeOff } from "lucide-react";
+import { User, Mail, Phone, MapPin, Calendar, Settings, LogOut, ChevronRight, Shield, Eye, EyeOff, Sun, Moon, Award } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useTheme } from "@/hooks/use-theme";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -28,6 +29,7 @@ const menuItems = [
 
 const UserProfile = () => {
   const navigate = useNavigate();
+  const { theme, setTheme } = useTheme();
   const [showPassword, setShowPassword] = useState(false);
   const [adminCredentials, setAdminCredentials] = useState({
     username: "",
@@ -74,6 +76,74 @@ const UserProfile = () => {
               <Button variant="outline" size="sm">
                 Edit
               </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Theme Selector */}
+        <Card className="bg-card border-border">
+          <CardHeader>
+            <CardTitle className="text-foreground">Appearance</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                  {theme === "light" ? (
+                    <Sun className="h-5 w-5 text-primary" />
+                  ) : (
+                    <Moon className="h-5 w-5 text-primary" />
+                  )}
+                </div>
+                <div>
+                  <p className="font-medium text-foreground">Theme</p>
+                  <p className="text-xs text-muted-foreground">
+                    {theme === "light" ? "Light Mode" : "Dark Mode"}
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  variant={theme === "light" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setTheme("light")}
+                  className="flex items-center gap-2"
+                >
+                  <Sun className="h-4 w-4" />
+                  Light
+                </Button>
+                <Button
+                  variant={theme === "dark" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setTheme("dark")}
+                  className="flex items-center gap-2"
+                >
+                  <Moon className="h-4 w-4" />
+                  Dark
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Loyalty Points Card */}
+        <Card className="bg-gradient-to-br from-primary/10 via-card to-amber-400/10 border-primary/30 hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate("/user/rewards")}>
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">Your Loyalty Points</p>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-4xl font-bold text-primary">750</span>
+                  <span className="text-sm text-muted-foreground">points</span>
+                </div>
+                <p className="text-xs text-muted-foreground mt-2">50 points away from next reward</p>
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <div className="h-16 w-16 rounded-full bg-gradient-to-br from-primary to-amber-400 flex items-center justify-center shadow-lg">
+                  <Award className="h-8 w-8 text-white" />
+                </div>
+                <Button variant="outline" size="sm" className="text-xs">View Rewards</Button>
+              </div>
             </div>
           </CardContent>
         </Card>
