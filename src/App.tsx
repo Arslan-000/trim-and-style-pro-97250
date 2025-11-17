@@ -32,6 +32,10 @@ import AppointmentDetail from "./pages/AppointmentDetail";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
+import AccountSettings from "./pages/AccountSettings";
+import HelpCenter from "./pages/HelpCenter";
+import SavedAddresses from "./pages/SavedAddresses";
+import BookingHistory from "./pages/BookingHistory";
 
 const queryClient = new QueryClient();
 
@@ -68,6 +72,10 @@ const App = () => (
           <Route path="/user/book-appointment" element={<UserLayout><AppointmentBooking /></UserLayout>} />
           <Route path="/user/appointment-detail" element={<UserLayout><AppointmentDetail /></UserLayout>} />
           <Route path="/user/profile" element={<UserLayout><UserProfile /></UserLayout>} />
+          <Route path="/user/profile/account" element={<UserLayout><AccountSettings /></UserLayout>} />
+          <Route path="/user/profile/help" element={<UserLayout><HelpCenter /></UserLayout>} />
+          <Route path="/user/profile/addresses" element={<UserLayout><SavedAddresses /></UserLayout>} />
+          <Route path="/user/profile/history" element={<UserLayout><BookingHistory /></UserLayout>} />
           <Route path="/user/notifications" element={<UserLayout><UserNotifications /></UserLayout>} />
           <Route path="/user/chat" element={<UserLayout><UserChat /></UserLayout>} />
           <Route path="/user/search" element={<UserLayout><UserSearch /></UserLayout>} />

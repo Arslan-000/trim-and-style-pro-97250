@@ -2,6 +2,7 @@ import { Calendar, Clock, MapPin, ToggleLeft } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -98,12 +99,6 @@ const UserBookings = () => {
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold text-foreground">My Booking</h1>
           <div className="flex items-center gap-2">
-            <button className="p-2 hover:bg-secondary rounded-lg transition-colors">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="11" cy="11" r="8"/>
-                <path d="m21 21-4.35-4.35"/>
-              </svg>
-            </button>
             <button className="p-2 hover:bg-secondary rounded-lg transition-colors">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="12" cy="12" r="1"/>
@@ -209,18 +204,65 @@ const UserBookings = () => {
                   <div className="flex gap-2">
                     {activeTab === "upcoming" && (
                       <>
-                        <Button
-                          variant="outline"
-                          className="flex-1 h-9 border-primary/30 text-primary hover:bg-primary/10"
-                        >
-                          Cancel Booking
-                        </Button>
-                        <Button
-                          onClick={() => navigate("/user/book-appointment")}
-                          className="flex-1 h-9 bg-primary hover:bg-primary/90 text-background"
-                        >
-                          View E-Receipt
-                        </Button>
+                        {/* Cancel Booking dialog */}
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button
+                              variant="outline"
+                              className="flex-1 h-9 border-primary/30 text-primary hover:bg-primary/10"
+                            >
+                              Cancel Booking
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent>
+                            <DialogHeader>
+                              <DialogTitle className="text-foreground">Cancel booking?</DialogTitle>
+                              <DialogDescription className="text-muted-foreground">
+                                This is a demo confirmation. No real cancellation will be performed.
+                              </DialogDescription>
+                            </DialogHeader>
+                            <DialogFooter>
+                              <Button variant="outline">No, keep booking</Button>
+                              <Button className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                                Yes, cancel
+                              </Button>
+                            </DialogFooter>
+                          </DialogContent>
+                        </Dialog>
+
+                        {/* E-Receipt dialog */}
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button
+                              className="flex-1 h-9 bg-primary hover:bg-primary/90 text-background"
+                            >
+                              View E-Receipt
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-md">
+                            <DialogHeader>
+                              <DialogTitle className="text-foreground">E-Receipt</DialogTitle>
+                              <DialogDescription className="text-muted-foreground">
+                                Preview of your booking receipt (UI only).
+                              </DialogDescription>
+                            </DialogHeader>
+                            <div className="rounded-lg border border-border overflow-hidden bg-muted/40">
+                              <img
+                                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800"
+                                alt="Receipt preview"
+                                className="w-full h-56 object-cover"
+                              />
+                            </div>
+                            <DialogFooter className="flex flex-col sm:flex-row sm:justify-end gap-2 mt-4">
+                              <Button variant="outline" className="flex-1 sm:flex-none">
+                                Save As
+                              </Button>
+                              <Button className="flex-1 sm:flex-none">
+                                Download
+                              </Button>
+                            </DialogFooter>
+                          </DialogContent>
+                        </Dialog>
                       </>
                     )}
                     {activeTab === "completed" && (
@@ -232,11 +274,38 @@ const UserBookings = () => {
                         >
                           Re-schedule
                         </Button>
-                        <Button
-                          className="flex-1 h-9 bg-primary hover:bg-primary/90 text-background"
-                        >
-                          View E-Receipt
-                        </Button>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button
+                              className="flex-1 h-9 bg-primary hover:bg-primary/90 text-background"
+                            >
+                              View E-Receipt
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-md">
+                            <DialogHeader>
+                              <DialogTitle className="text-foreground">E-Receipt</DialogTitle>
+                              <DialogDescription className="text-muted-foreground">
+                                Preview of your booking receipt (UI only).
+                              </DialogDescription>
+                            </DialogHeader>
+                            <div className="rounded-lg border border-border overflow-hidden bg-muted/40">
+                              <img
+                                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800"
+                                alt="Receipt preview"
+                                className="w-full h-56 object-cover"
+                              />
+                            </div>
+                            <DialogFooter className="flex flex-col sm:flex-row sm:justify-end gap-2 mt-4">
+                              <Button variant="outline" className="flex-1 sm:flex-none">
+                                Save As
+                              </Button>
+                              <Button className="flex-1 sm:flex-none">
+                                Download
+                              </Button>
+                            </DialogFooter>
+                          </DialogContent>
+                        </Dialog>
                       </>
                     )}
                     {activeTab === "cancelled" && (
@@ -248,11 +317,38 @@ const UserBookings = () => {
                         >
                           Re-schedule
                         </Button>
-                        <Button
-                          className="flex-1 h-9 bg-primary hover:bg-primary/90 text-background"
-                        >
-                          View E-Receipt
-                        </Button>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button
+                              className="flex-1 h-9 bg-primary hover:bg-primary/90 text-background"
+                            >
+                              View E-Receipt
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-md">
+                            <DialogHeader>
+                              <DialogTitle className="text-foreground">E-Receipt</DialogTitle>
+                              <DialogDescription className="text-muted-foreground">
+                                Preview of your booking receipt (UI only).
+                              </DialogDescription>
+                            </DialogHeader>
+                            <div className="rounded-lg border border-border overflow-hidden bg-muted/40">
+                              <img
+                                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800"
+                                alt="Receipt preview"
+                                className="w-full h-56 object-cover"
+                              />
+                            </div>
+                            <DialogFooter className="flex flex-col sm:flex-row sm:justify-end gap-2 mt-4">
+                              <Button variant="outline" className="flex-1 sm:flex-none">
+                                Save As
+                              </Button>
+                              <Button className="flex-1 sm:flex-none">
+                                Download
+                              </Button>
+                            </DialogFooter>
+                          </DialogContent>
+                        </Dialog>
                       </>
                     )}
                   </div>

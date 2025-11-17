@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Bell, Gift, Calendar, Star, CheckCheck, Trash2, Settings, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
@@ -5,8 +6,19 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
-const notifications = [
+const initialNotifications = [
   {
     id: 1,
     type: "booking",
@@ -76,6 +88,7 @@ const notifications = [
 ];
 
 const UserNotifications = () => {
+  const [notifications, setNotifications] = useState(initialNotifications);
   const unreadCount = notifications.filter(n => !n.read).length;
   const navigate = useNavigate();
 
@@ -93,28 +106,87 @@ const UserNotifications = () => {
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div className="flex items-center justify-between flex-1">
-          <div>
-            <h1 className="text-3xl font-bold text-foreground">Notifications</h1>
-            <p className="text-sm text-muted-foreground mt-1">
-              You have {unreadCount} unread notification{unreadCount !== 1 ? 's' : ''}
-            </p>
-          </div>
-            <Button size="icon" variant="outline" className="rounded-full">
-              <Settings className="h-5 w-5" />
-            </Button>
+            <div>
+              <h1 className="text-3xl font-bold text-foreground">Notifications</h1>
+              <p className="text-sm text-muted-foreground mt-1">
+                You have {unreadCount} unread notification{unreadCount !== 1 ? 's' : ''}
+              </p>
+            </div>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button size="icon" variant="outline" className="rounded-full">
+                  <Settings className="h-5 w-5" />
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="text-foreground">Notification settings</AlertDialogTitle>
+                  <AlertDialogDescription className="text-muted-foreground">
+                    This is a UI-only placeholder. Configure how you would like to receive alerts in a future release.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Close</AlertDialogCancel>
+                  <AlertDialogAction>OK</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </div>
 
         {/* Actions */}
         <div className="flex items-center gap-3">
-          <Button variant="outline" size="sm" className="gap-2">
-            <CheckCheck className="h-4 w-4" />
-            Mark All Read
-          </Button>
-          <Button variant="outline" size="sm" className="gap-2 text-destructive hover:text-destructive">
-            <Trash2 className="h-4 w-4" />
-            Clear All
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline" size="sm" className="gap-2">
+                <CheckCheck className="h-4 w-4" />
+                Mark All Read
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle className="text-foreground">Mark all as read?</AlertDialogTitle>
+                <AlertDialogDescription className="text-muted-foreground">
+                  This will mark all notifications as read. This action is UI-only and does not affect any backend data.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={() =>
+                    setNotifications(prev => prev.map(n => ({ ...n, read: true })))
+                  }
+                >
+                  Confirm
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline" size="sm" className="gap-2 text-destructive hover:text-destructive">
+                <Trash2 className="h-4 w-4" />
+                Clear All
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle className="text-foreground">Clear all notifications?</AlertDialogTitle>
+                <AlertDialogDescription className="text-muted-foreground">
+                  This will remove all notifications from this UI list. This change is not persisted to any server.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={() => setNotifications([])}
+                >
+                  Clear
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
 
         {/* Tabs */}

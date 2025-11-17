@@ -25,7 +25,7 @@ const AppointmentDetail = () => {
         </div>
       </div>
 
-      <div className="max-w-2xl mx-auto px-6 py-6 space-y-6">
+      <div className="max-w-7xl mx-auto px-4 py-6 space-y-6">
         {/* Status Badge */}
         <div className="flex justify-center">
           <Badge className="bg-primary/20 text-primary border-primary/30 px-6 py-2 text-base font-semibold">

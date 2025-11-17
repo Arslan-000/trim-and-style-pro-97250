@@ -3,6 +3,7 @@ import { Home, Scissors, ShoppingBag, Calendar, User, Bell, MessageCircle } from
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const navigation = [
   { name: "Home", href: "/user", icon: Home },
@@ -17,9 +18,19 @@ export const UserLayout = ({ children }: { children: React.ReactNode }) => {
   const hideBottomBar = location.pathname === "/user/notifications" 
     || location.pathname.startsWith("/user/salon/") 
     || location.pathname === "/user/book-appointment"
-    || location.pathname === "/user/appointment-detail";
+    || location.pathname === "/user/appointment-detail"
+    || location.pathname === "/user/profile/account"
+    || location.pathname === "/user/profile/history"
+    || location.pathname === "/user/profile/help"
+    || location.pathname === "/user/profile/addresses"
+    || location.pathname === "/user/chat"
+    || location.pathname === "/user/rewards";
   
   const hideTopNav = location.pathname === "/user/chat";
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [location.pathname]);
 
   return (
     <div className="min-h-screen bg-background">

@@ -1,4 +1,4 @@
-import { Bell, Search, Scissors, Droplet, Wind, Sparkles, Users, Calendar, Star, Clock, MapPin, Plus, Phone, ChevronRight, Gift, Zap, Video, Lightbulb, PartyPopper, Play, ShoppingBag, MessageCircle, Award, X } from "lucide-react";
+import { Bell, Search, Scissors, Droplet, Wind, Sparkles, Users, Calendar, Star, Clock, MapPin, Plus, Phone, ChevronRight, ChevronUp, ChevronDown, Gift, Zap, Video, Lightbulb, PartyPopper, Play, ShoppingBag, MessageCircle, Award, X, Heart, Share2 } from "lucide-react";
 import { useState } from "react";
 import storyOffersImg from "@/assets/story-offers.jpg";
 import storyTransformationImg from "@/assets/story-transformation.jpg";
@@ -19,16 +19,76 @@ import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
 const services = [
-  { id: 1, name: "Haircut", icon: Scissors, color: "from-primary to-amber-400" },
-  { id: 2, name: "Coloring", icon: Droplet, color: "from-purple-500 to-pink-500" },
-  { id: 3, name: "Styling", icon: Wind, color: "from-blue-500 to-cyan-500" },
-  { id: 4, name: "Spa", icon: Sparkles, color: "from-green-500 to-emerald-500" },
-  { id: 5, name: "Facial", icon: Sparkles, color: "from-orange-500 to-red-500" },
-  { id: 6, name: "Makeup", icon: Sparkles, color: "from-pink-500 to-rose-500" },
-  { id: 7, name: "Massage", icon: Wind, color: "from-indigo-500 to-purple-500" },
-  { id: 8, name: "Manicure", icon: Scissors, color: "from-rose-500 to-pink-500" },
-  { id: 9, name: "Pedicure", icon: Droplet, color: "from-teal-500 to-cyan-500" },
-  { id: 10, name: "Threading", icon: Scissors, color: "from-amber-500 to-orange-500" },
+  { 
+    id: 1, 
+    name: "Haircut", 
+    icon: Scissors, 
+    color: "from-primary to-amber-400",
+    image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&h=400&fit=crop"
+  },
+  { 
+    id: 2, 
+    name: "Coloring", 
+    icon: Droplet, 
+    color: "from-purple-500 to-pink-500",
+    image: "https://images.unsplash.com/photo-1519699047591-1282a7bfc7d9?w=400&h=400&fit=crop"
+  },
+  { 
+    id: 3, 
+    name: "Styling", 
+    icon: Wind, 
+    color: "from-blue-500 to-cyan-500",
+    image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=400&fit=crop"
+  },
+  { 
+    id: 4, 
+    name: "Spa", 
+    icon: Sparkles, 
+    color: "from-green-500 to-emerald-500",
+    image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400&h=400&fit=crop"
+  },
+  { 
+    id: 5, 
+    name: "Facial", 
+    icon: Sparkles, 
+    color: "from-orange-500 to-red-500",
+    image: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=400&h=400&fit=crop"
+  },
+  { 
+    id: 6, 
+    name: "Makeup", 
+    icon: Sparkles, 
+    color: "from-pink-500 to-rose-500",
+    image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop"
+  },
+  { 
+    id: 7, 
+    name: "Massage", 
+    icon: Wind, 
+    color: "from-indigo-500 to-purple-500",
+    image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&h=400&fit=crop"
+  },
+  { 
+    id: 8, 
+    name: "Manicure", 
+    icon: Scissors, 
+    color: "from-rose-500 to-pink-500",
+    image: "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?w=400&h=400&fit=crop"
+  },
+  { 
+    id: 9, 
+    name: "Pedicure", 
+    icon: Droplet, 
+    color: "from-teal-500 to-cyan-500",
+    image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=400&fit=crop"
+  },
+  { 
+    id: 10, 
+    name: "Threading", 
+    icon: Scissors, 
+    color: "from-amber-500 to-orange-500",
+    image: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?w=400&h=400&fit=crop"
+  },
 ];
 
 const stories = [
@@ -76,6 +136,7 @@ const stylists = [
 const UserHome = () => {
   const navigate = useNavigate();
   const [selectedVideo, setSelectedVideo] = useState<{ name: string; url: string } | null>(null);
+  const [storyList, setStoryList] = useState(stories);
 
   const handleServiceClick = () => {
     navigate("/user/salon/1");
@@ -83,6 +144,23 @@ const UserHome = () => {
 
   const handleVideoClick = (story: typeof stories[0]) => {
     setSelectedVideo({ name: story.name, url: story.videoUrl });
+  };
+
+  const handleMoveStory = (index: number, direction: "up" | "down") => {
+    setStoryList((prev) => {
+      const newList = [...prev];
+      const targetIndex = direction === "up" ? index - 1 : index + 1;
+
+      if (targetIndex < 0 || targetIndex >= newList.length) {
+        return prev;
+      }
+
+      const temp = newList[targetIndex];
+      newList[targetIndex] = newList[index];
+      newList[index] = temp;
+
+      return newList;
+    });
   };
 
   return (
@@ -127,6 +205,7 @@ const UserHome = () => {
                 size="icon" 
                 variant="ghost" 
                 className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm h-10 w-10 rounded-full shadow-lg transition-all hover:scale-110"
+                onClick={() => navigate("/user/profile")}
               >
                 <ChevronRight className="h-5 w-5" />
               </Button>
@@ -202,33 +281,34 @@ const UserHome = () => {
         </div>
 
         {/* Loyalty Points Card */}
-        <Card 
-          className="relative overflow-hidden bg-gradient-to-br from-amber-50 via-amber-100/50 to-amber-50 dark:from-amber-950/20 dark:via-amber-900/10 dark:to-amber-950/20 border-amber-200 dark:border-amber-800/30 cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-[1.01]"
-          onClick={() => navigate("/user/rewards")}
-        >
-          <div className="absolute top-0 right-0 w-40 h-40 bg-amber-400/20 rounded-full blur-3xl" />
-          <CardContent className="relative p-5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-primary to-amber-400 flex items-center justify-center shadow-lg flex-shrink-0">
-                  <Award className="h-7 w-7 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-base font-bold text-foreground mb-1">Loyalty Points</h3>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-sm text-foreground">You have</span>
-                    <span className="text-2xl font-bold text-primary">120</span>
-                    <span className="text-sm text-muted-foreground">points</span>
+        <Card className="border border-amber-200 bg-gradient-to-r from-amber-50 via-amber-50 to-amber-100 rounded-3xl shadow-sm">
+          <CardContent className="p-4 sm:p-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            {/* Left: Icon */}
+            <div className="flex items-start gap-3 flex-1">
+              <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-primary to-amber-400 flex items-center justify-center shadow-md flex-shrink-0">
+                <Award className="h-6 w-6 text-white" />
+              </div>
+              {/* Middle: Text + small progress */}
+              <div className="space-y-1">
+                <p className="text-xs font-semibold text-primary/90 uppercase tracking-wide">Loyalty Points</p>
+                <p className="text-sm text-muted-foreground">
+                  You have <span className="text-lg font-bold text-primary">750</span> points
+                </p>
+                <div className="mt-2 space-y-1">
+                  <div className="h-1.5 rounded-full bg-amber-100 overflow-hidden max-w-xs">
+                    <div className="h-full w-3/4 bg-gradient-to-r from-primary to-amber-400" />
                   </div>
-                  <div className="flex items-center gap-2 mt-2">
-                    <Progress value={60} className="h-1.5 w-24 bg-amber-200/50 dark:bg-amber-900/30" />
-                    <span className="text-xs text-muted-foreground font-medium">80 more for a free haircut!</span>
-                  </div>
+                  <p className="text-[11px] text-amber-700 font-medium">50 more for VIP Priority Booking!</p>
                 </div>
               </div>
-              <Button 
-                size="sm" 
-                className="flex-shrink-0 bg-primary hover:bg-primary/90 text-primary-foreground shadow-md"
+            </div>
+
+            {/* Right: View Rewards button */}
+            <div className="flex sm:block">
+              <Button
+                size="sm"
+                className="w-full sm:w-auto rounded-full bg-gradient-to-r from-primary to-amber-400 hover:from-primary/90 hover:to-amber-400/90 text-white font-semibold shadow-md mt-1"
+                onClick={() => navigate("/user/rewards")}
               >
                 View Rewards
                 <ChevronRight className="h-4 w-4 ml-1" />
@@ -242,7 +322,7 @@ const UserHome = () => {
           <h3 className="text-xl font-bold text-foreground px-1">Latest Updates</h3>
           <ScrollArea className="w-full whitespace-nowrap">
             <div className="flex gap-3 pb-2">
-              {stories.map((story) => (
+              {storyList.map((story) => (
                 <div key={story.id} className="flex-shrink-0 cursor-pointer group" onClick={() => handleVideoClick(story)}>
                   <div className="relative w-28 h-40 rounded-2xl overflow-hidden shadow-md group-hover:shadow-xl transition-all duration-300">
                     {/* Story Image */}
@@ -283,35 +363,37 @@ const UserHome = () => {
         <div className="space-y-5">
           <div className="flex items-center justify-between">
             <h3 className="text-2xl font-bold text-foreground">Our Services</h3>
-            <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80 font-semibold">
+            <Button variant="link" size="sm" className="text-primary font-semibold px-0">
               View All →
             </Button>
           </div>
 
           <ScrollArea className="w-full whitespace-nowrap">
-            <div className="flex gap-5 pb-2">
-              {services.map((service) => {
-                const ServiceIcon = service.icon;
-                return (
-                  <Card
-                    key={service.id}
-                    className="relative flex-shrink-0 w-36 cursor-pointer hover:shadow-[var(--shadow-elevated)] transition-all duration-300 group bg-card/50 backdrop-blur-sm border-border hover:border-primary/50 overflow-hidden"
-                    onClick={handleServiceClick}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <CardContent className="relative p-5 flex flex-col items-center gap-4">
-                      <div className={`h-20 w-20 rounded-3xl bg-gradient-to-br ${service.color} flex items-center justify-center shadow-[var(--shadow-soft)] group-hover:shadow-[var(--shadow-gold)] group-hover:scale-110 transition-all duration-300`}>
-                        <ServiceIcon className="h-9 w-9 text-white drop-shadow-lg" />
-                      </div>
+            <div className="flex gap-4 pb-1">
+              {services.map((service) => (
+                <Card
+                  key={service.id}
+                  className="relative flex-shrink-0 w-40 cursor-pointer border border-border/60 hover:border-primary/60 bg-card transition-all duration-300 group hover:shadow-lg rounded-2xl"
+                  onClick={handleServiceClick}
+                >
+                  <CardContent className="p-0 flex flex-col">
+                    <div className="relative h-28 w-full overflow-hidden rounded-t-2xl">
+                      <img
+                        src={service.image}
+                        alt={service.name}
+                        className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </div>
+                    <div className="px-3 py-3 flex flex-col items-center gap-1">
                       <p className="text-sm font-semibold text-foreground text-center group-hover:text-primary transition-colors">
                         {service.name}
                       </p>
-                    </CardContent>
-                  </Card>
-                );
-              })}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
-            <ScrollBar orientation="horizontal" />
           </ScrollArea>
         </div>
 
@@ -319,7 +401,7 @@ const UserHome = () => {
         <div className="space-y-5">
           <div className="flex items-center justify-between">
             <h3 className="text-2xl font-bold text-foreground">Meet Our Stylists</h3>
-            <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80 font-semibold">
+            <Button variant="link" size="sm" className="text-primary font-semibold px-0">
               View All →
             </Button>
           </div>
@@ -369,7 +451,7 @@ const UserHome = () => {
         <div className="space-y-5">
           <div className="flex items-center justify-between">
             <h3 className="text-2xl font-bold text-foreground">Ongoing Deals</h3>
-            <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80 font-semibold">
+            <Button variant="link" size="sm" className="text-primary font-semibold px-0">
               View All →
             </Button>
           </div>
@@ -466,7 +548,7 @@ const UserHome = () => {
         <div className="space-y-5">
           <div className="flex items-center justify-between">
             <h3 className="text-2xl font-bold text-foreground">Our Gallery</h3>
-            <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80 font-semibold" onClick={handleServiceClick}>
+            <Button variant="link" size="sm" className="text-primary font-semibold px-0" onClick={handleServiceClick}>
               View All →
             </Button>
           </div>
@@ -510,7 +592,7 @@ const UserHome = () => {
         <div className="space-y-5">
           <div className="flex items-center justify-between">
             <h3 className="text-2xl font-bold text-foreground">Customer Reviews</h3>
-            <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80 font-semibold">
+            <Button variant="link" size="sm" className="text-primary font-semibold px-0">
               View All →
             </Button>
           </div>
@@ -554,39 +636,6 @@ const UserHome = () => {
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
         </div>
-
-        {/* Loyalty Card / Rewards - Enhanced */}
-        <Card className="relative bg-gradient-to-br from-primary/20 via-amber-400/10 to-primary/20 border-primary/40 overflow-hidden shadow-[var(--shadow-elevated)]">
-          <div className="absolute top-0 right-0 h-full w-40 bg-gradient-to-l from-primary/30 to-transparent" />
-          <div className="absolute -top-10 -right-10 h-32 w-32 bg-primary/20 rounded-full blur-3xl" />
-          <CardContent className="p-6 relative z-10">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-primary to-amber-400 flex items-center justify-center shadow-[var(--shadow-gold)]">
-                    <Star className="h-6 w-6 text-white fill-white drop-shadow-lg" />
-                  </div>
-                  <h3 className="text-xl font-bold text-foreground">Loyalty Points</h3>
-                </div>
-                <p className="text-base text-muted-foreground mb-2">
-                  You have <span className="font-bold text-primary text-2xl">120</span> <span className="font-semibold">points</span>
-                </p>
-                <div className="flex items-center gap-2">
-                  <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden max-w-[200px]">
-                    <div className="h-full bg-gradient-to-r from-primary to-amber-400 rounded-full" style={{ width: '60%' }} />
-                  </div>
-                  <p className="text-xs text-muted-foreground whitespace-nowrap">
-                    80 more for a free haircut!
-                  </p>
-                </div>
-              </div>
-              <Button size="lg" className="gap-2 shadow-lg hover:shadow-xl transition-all">
-                View Rewards
-                <ChevronRight className="h-5 w-5" />
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
 
         {/* Salon Info - Enhanced */}
         <Card className="relative bg-card/50 backdrop-blur-sm border-border overflow-hidden">
@@ -649,29 +698,107 @@ const UserHome = () => {
         <span className="font-bold text-lg text-white">Book Now</span>
       </Button>
 
-      {/* Video Player Dialog */}
+      {/* Video Player Dialog - Shorts style with vertical scroll */}
       <Dialog open={!!selectedVideo} onOpenChange={() => setSelectedVideo(null)}>
-        <DialogContent className="max-w-4xl p-0 bg-black border-0">
+        <DialogContent className="max-w-md w-full p-0 bg-black border-0">
           <DialogTitle className="sr-only">{selectedVideo?.name}</DialogTitle>
-          <div className="relative">
+          <div className="relative h-[80vh] bg-black">
+            {/* Close button */}
             <Button
               variant="ghost"
               size="icon"
-              className="absolute top-2 right-2 z-50 h-8 w-8 rounded-full bg-black/50 hover:bg-black/70 text-white"
+              className="absolute top-3 right-3 z-50 h-8 w-8 rounded-full bg-black/60 hover:bg-black/80 text-white"
               onClick={() => setSelectedVideo(null)}
             >
               <X className="h-4 w-4" />
             </Button>
+
             {selectedVideo && (
-              <video
-                key={selectedVideo.url}
-                controls
-                autoPlay
-                className="w-full aspect-video"
-              >
-                <source src={selectedVideo.url} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              <ScrollArea className="h-full w-full snap-y snap-mandatory overflow-y-auto">
+                <div className="flex flex-col">
+                  {storyList.map((story, index) => (
+                    <div
+                      key={story.id}
+                      className="relative flex items-center justify-center h-[80vh] snap-start"
+                    >
+                      {/* Vertical video */}
+                      <video
+                        key={story.videoUrl}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="h-full w-auto max-w-full object-cover rounded-3xl shadow-2xl"
+                      >
+                        <source src={story.videoUrl} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+
+                      {/* Right-side actions */}
+                      <div className="absolute right-3 top-1/3 -translate-y-1/2 flex flex-col items-center gap-4 text-white">
+                        <button className="flex flex-col items-center gap-1">
+                          <Heart className="h-6 w-6 drop-shadow" />
+                          <span className="text-[11px]">9.7k</span>
+                        </button>
+                        <button className="flex flex-col items-center gap-1">
+                          <MessageCircle className="h-6 w-6 drop-shadow" />
+                          <span className="text-[11px]">112</span>
+                        </button>
+                        <button className="flex flex-col items-center gap-1">
+                          <Share2 className="h-6 w-6 drop-shadow" />
+                          <span className="text-[11px]">Share</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleMoveStory(index, "up")}
+                          disabled={index === 0}
+                          className="mt-2 flex flex-col items-center gap-1 disabled:opacity-40 disabled:cursor-not-allowed"
+                        >
+                          <div className="h-7 w-7 rounded-full bg-white/20 flex items-center justify-center">
+                            <ChevronUp className="h-4 w-4" />
+                          </div>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleMoveStory(index, "down")}
+                          disabled={index === storyList.length - 1}
+                          className="flex flex-col items-center gap-1 disabled:opacity-40 disabled:cursor-not-allowed"
+                        >
+                          <div className="h-7 w-7 rounded-full bg-white/20 flex items-center justify-center">
+                            <ChevronDown className="h-4 w-4" />
+                          </div>
+                        </button>
+                      </div>
+
+                      {/* Bottom overlay: creator + title */}
+                      <div className="absolute left-0 right-0 bottom-0 px-4 pb-4 pt-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <Avatar className="h-8 w-8 border border-white/30">
+                              <AvatarImage src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=80" />
+                              <AvatarFallback>EB</AvatarFallback>
+                            </Avatar>
+                            <div className="flex flex-col">
+                              <span className="text-xs font-semibold text-white">@elitebarber</span>
+                              <span className="text-[11px] text-white/70">Latest updates</span>
+                            </div>
+                          </div>
+                          <Button
+                            size="sm"
+                            className="h-7 rounded-full bg-white text-black text-xs px-3 py-0 font-semibold shadow-md"
+                          >
+                            Subscribe
+                          </Button>
+                        </div>
+                        <p className="text-xs text-white leading-snug line-clamp-2">
+                          {story.name} · Discover quick tips, salon moments, and behind-the-scenes from Elite Barber.
+                        </p>
+                        <p className="mt-1 text-[11px] text-white/70">#elitebarber #shorts #grooming</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </ScrollArea>
             )}
           </div>
         </DialogContent>

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -111,7 +112,7 @@ const SalonDetail = () => {
   const [showHaircutTypes, setShowHaircutTypes] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className="min-h-screen bg-background pb-32">
       {/* Top Header Section - Large Cover Photo */}
       <div className="relative h-[280px]">
         <img
@@ -158,26 +159,83 @@ const SalonDetail = () => {
 
             {/* Quick Action Buttons */}
             <div className="flex items-center gap-3 pt-2">
-              <Button size="sm" variant="outline" className="flex-1 gap-2">
-                <Globe className="h-4 w-4" />
-                <span className="text-xs">Website</span>
-              </Button>
-              <Button size="sm" variant="outline" className="flex-1 gap-2">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button size="sm" variant="outline" className="flex-1 gap-2">
+                    <Globe className="h-4 w-4" />
+                    <span className="text-xs">Website</span>
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-sm">
+                  <DialogHeader>
+                    <DialogTitle className="text-foreground">Coming Soon</DialogTitle>
+                    <DialogDescription className="text-muted-foreground">
+                      The salon website experience will be available soon.
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+
+              <Button
+                size="sm"
+                variant="outline"
+                className="flex-1 gap-2"
+                onClick={() => navigate("/user/chat")}
+              >
                 <MessageCircle className="h-4 w-4" />
-                <span className="text-xs">Message</span>
+                <span className="text-xs">Chat</span>
               </Button>
-              <Button size="sm" variant="outline" className="flex-1 gap-2">
-                <Phone className="h-4 w-4" />
-                <span className="text-xs">Call</span>
-              </Button>
-              <Button size="sm" variant="outline" className="flex-1 gap-2">
-                <Navigation className="h-4 w-4" />
-                <span className="text-xs">Direction</span>
-              </Button>
-              <Button size="sm" variant="outline" className="flex-1 gap-2">
-                <Share2 className="h-4 w-4" />
-                <span className="text-xs">Share</span>
-              </Button>
+
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button size="sm" variant="outline" className="flex-1 gap-2">
+                    <Phone className="h-4 w-4" />
+                    <span className="text-xs">Call</span>
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-sm">
+                  <DialogHeader>
+                    <DialogTitle className="text-foreground">Coming Soon</DialogTitle>
+                    <DialogDescription className="text-muted-foreground">
+                      Calling the salon directly from the app will be available soon.
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button size="sm" variant="outline" className="flex-1 gap-2">
+                    <Navigation className="h-4 w-4" />
+                    <span className="text-xs">Direction</span>
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-sm">
+                  <DialogHeader>
+                    <DialogTitle className="text-foreground">Coming Soon</DialogTitle>
+                    <DialogDescription className="text-muted-foreground">
+                      Maps and directions to the salon will be available soon.
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button size="sm" variant="outline" className="flex-1 gap-2">
+                    <Share2 className="h-4 w-4" />
+                    <span className="text-xs">Share</span>
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-sm">
+                  <DialogHeader>
+                    <DialogTitle className="text-foreground">Coming Soon</DialogTitle>
+                    <DialogDescription className="text-muted-foreground">
+                      Sharing this salon with friends will be available soon.
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
             </div>
           </CardContent>
         </Card>
@@ -235,14 +293,22 @@ const SalonDetail = () => {
         {/* About Us Section */}
         {activeTab === "about" && (
           <Card className="bg-card border-border">
-            <CardContent className="p-6 space-y-4">
-              <h3 className="text-lg font-semibold text-foreground">About Us</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                At Elite Barber, we bring luxury grooming and styling to life. Our expert team provides top-quality services in a relaxing atmosphere. With over 10 years of experience, we're dedicated to making you look and feel your best.
-              </p>
-              <Button variant="ghost" size="sm" className="text-primary px-0">
-                Read More
-              </Button>
+            <CardContent className="p-6 space-y-6">
+              <div className="space-y-3 max-w-3xl">
+                <h3 className="text-lg font-semibold text-foreground">About Us</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  At Elite Barber, we bring luxury grooming and styling to life. Our expert team provides top-quality services
+                  in a relaxing atmosphere. With over 10 years of experience, we're dedicated to making you look and feel
+                  your best.
+                </p>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  From classic cuts to modern styles, we focus on comfort, hygiene, and detail so every visit feels like a
+                  premium experience.
+                </p>
+                <Button variant="ghost" size="sm" className="text-primary px-0">
+                  Read More
+                </Button>
+              </div>
 
               {/* Working Hours & Contact Info */}
               <div className="grid md:grid-cols-2 gap-6 pt-4 border-t border-border">
@@ -427,7 +493,7 @@ const SalonDetail = () => {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-foreground">What Our Clients Say</h3>
-              <Button variant="ghost" size="sm" className="text-primary">
+              <Button variant="link" size="sm" className="text-primary px-0">
                 View All
               </Button>
             </div>

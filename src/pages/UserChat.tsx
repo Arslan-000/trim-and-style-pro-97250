@@ -1,8 +1,10 @@
-import { Send, Smile, Paperclip, Phone, Video, MoreVertical } from "lucide-react";
+import type React from "react";
+import { Send, Smile, Paperclip, Phone, Video, MoreVertical, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const initialMessages = [
   {
@@ -52,6 +54,7 @@ const initialMessages = [
 ];
 
 const UserChat = () => {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState(initialMessages);
   const [inputMessage, setInputMessage] = useState("");
 
@@ -84,6 +87,14 @@ const UserChat = () => {
         className="flex items-center justify-between px-4 py-3 border-b border-border flex-shrink-0 bg-card shadow-sm"
       >
         <div className="flex items-center gap-3">
+          <Button
+            size="icon"
+            variant="ghost"
+            className="rounded-full h-9 w-9 mr-1 text-muted-foreground hover:text-primary hover:bg-primary/10"
+            onClick={() => navigate(-1)}
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
           <div className="relative">
             <Avatar className="h-11 w-11 border-2 border-primary shadow-sm">
               <AvatarImage src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" />
@@ -150,20 +161,8 @@ const UserChat = () => {
             </div>
           ))}
 
-          {/* Typing Indicator - Hidden by default, show when needed */}
-          {false && (
-            <div className="flex justify-start">
-              <div className="px-4 py-3 rounded-[18px] rounded-bl-sm bg-card border border-border shadow-sm">
-                <div className="flex items-center gap-1">
-                  <div className="flex gap-1">
-                    <span className="w-2 h-2 rounded-full bg-muted-foreground/60 animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-2 h-2 rounded-full bg-muted-foreground/60 animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="w-2 h-2 rounded-full bg-muted-foreground/60 animate-bounce" style={{ animationDelay: '300ms' }} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+          {/* Typing Indicator placeholder (disabled) */}
+          {/* To enable later, drive this block with a real state flag instead of a constant. */}
         </div>
       </div>
 

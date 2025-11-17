@@ -109,53 +109,51 @@ const UserRewards = () => {
   return (
     <div className="min-h-screen bg-background pb-24">
       {/* Header */}
-      <div className="bg-gradient-to-br from-primary via-amber-400 to-primary text-white">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="flex items-center gap-4 mb-6">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => navigate(-1)}
-              className="h-10 w-10 rounded-full bg-white/20 hover:bg-white/30 text-white border border-white/30 backdrop-blur-sm shadow-lg"
-            >
-              <ChevronRight className="h-5 w-5 rotate-180" />
-            </Button>
-            <h1 className="text-2xl font-bold">Rewards & Points</h1>
+      <div className="border-b bg-card/95 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center gap-3">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate(-1)}
+            className="h-9 w-9 rounded-full text-muted-foreground hover:text-primary hover:bg-primary/10"
+          >
+            <ChevronRight className="h-5 w-5 rotate-180" />
+          </Button>
+          <div className="flex flex-col">
+            <span className="text-xs text-muted-foreground uppercase tracking-wide">Loyalty Program</span>
+            <h1 className="text-xl sm:text-2xl font-semibold text-foreground">Rewards & Points</h1>
           </div>
-
-          {/* Points Card */}
-          <Card className="bg-white/95 backdrop-blur-sm border-0 shadow-xl">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <p className="text-sm text-muted-foreground mb-1">Your Points</p>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-4xl font-bold text-primary">{currentPoints}</span>
-                    <span className="text-sm text-muted-foreground">points</span>
-                  </div>
-                </div>
-                <div className="h-16 w-16 rounded-full bg-gradient-to-br from-primary to-amber-400 flex items-center justify-center shadow-lg">
-                  <Award className="h-8 w-8 text-white" />
-                </div>
-              </div>
-
-              {/* Progress to Next Reward */}
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Next reward</span>
-                  <span className="font-semibold text-foreground">{nextReward - currentPoints} points to go</span>
-                </div>
-                <Progress value={progressPercent} className="h-2" />
-                <p className="text-xs text-muted-foreground">
-                  {Math.round(progressPercent)}% to VIP Priority Booking
-                </p>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-6 space-y-6">
+        {/* Points Card */}
+        <Card className="border-0 shadow-xl bg-gradient-to-r from-primary via-amber-400 to-primary text-white">
+          <CardContent className="p-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="text-sm/relaxed text-white/80 mb-1">Your Points</p>
+              <div className="flex items-baseline gap-2">
+                <span className="text-4xl font-bold">{currentPoints}</span>
+                <span className="text-sm text-white/80">points</span>
+              </div>
+            </div>
+            <div className="flex-1 max-w-md space-y-2">
+              {/* Progress to Next Reward */}
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-white/80">Next reward</span>
+                <span className="font-semibold">{nextReward - currentPoints} points to go</span>
+              </div>
+              <Progress value={progressPercent} className="h-2 bg-white/20" />
+              <p className="text-xs text-white/80">
+                {Math.round(progressPercent)}% to VIP Priority Booking
+              </p>
+            </div>
+            <div className="h-16 w-16 rounded-2xl bg-white/10 flex items-center justify-center shadow-lg border border-white/20">
+              <Award className="h-8 w-8 text-white" />
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Available Rewards */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
@@ -278,7 +276,7 @@ const UserRewards = () => {
         <div className="fixed bottom-20 left-0 right-0 px-4 z-10">
           <Button
             onClick={() => navigate("/user/book-appointment")}
-            className="w-full max-w-md mx-auto h-11 text-sm font-semibold shadow-xl hover:scale-[1.02] transition-transform"
+            className="w-full max-w-xl mx-auto h-12 text-sm font-semibold shadow-xl hover:scale-[1.02] transition-transform"
           >
             <Calendar className="h-4 w-4 mr-2" />
             Book Now & Earn Points

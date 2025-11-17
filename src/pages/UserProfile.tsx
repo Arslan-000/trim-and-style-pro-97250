@@ -21,10 +21,10 @@ import {
 } from "@/components/ui/alert-dialog";
 
 const menuItems = [
-  { icon: Settings, label: "Account Settings", description: "Manage your account" },
-  { icon: Calendar, label: "Booking History", description: "View past bookings" },
-  { icon: MapPin, label: "Saved Addresses", description: "Manage addresses" },
-  { icon: User, label: "Help & Support", description: "Get assistance" },
+  { icon: Settings, label: "Account Settings", description: "Manage your account", path: "/user/profile/account" },
+  { icon: Calendar, label: "Booking History", description: "View past bookings", path: "/user/profile/history" },
+  { icon: MapPin, label: "Saved Addresses", description: "Manage addresses", path: "/user/profile/addresses" },
+  { icon: User, label: "Help & Support", description: "Get assistance", path: "/user/profile/help" },
 ];
 
 const UserProfile = () => {
@@ -177,6 +177,7 @@ const UserProfile = () => {
               return (
                 <div
                   key={item.label}
+                  onClick={() => navigate(item.path)}
                   className={`flex items-center justify-between p-4 cursor-pointer hover:bg-secondary/50 transition-colors ${
                     index !== menuItems.length - 1 ? 'border-b border-border' : ''
                   }`}
